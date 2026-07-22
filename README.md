@@ -31,6 +31,17 @@ These rules are broadly applicable regardless of setup or stack. The rest of the
 - [sweep-verification](rules/sweep-verification.md): a corrections sweep gets a verification round before it is called complete.
 - [no-self-citation](rules/no-self-citation.md): an AI-authored reply is not a settled decision; trace decisions to a human.
 
+## skills/
+
+User-invocable workflow skills (`/skill-name` in a session). Each directory holds a `SKILL.md` that loads as the operating procedure for that workflow, plus any reference docs it needs:
+
+- [jira-ticket-workflow](skills/jira-ticket-workflow/SKILL.md): runs a Jira ticket end to end as a team lead: plan the work, delegate implementation to specialist agents, facilitate cross-review, ship the PR.
+- [work-the-branch](skills/work-the-branch/SKILL.md): takes in-progress branch work at any stage, assesses where it stands, and advances it to review-ready.
+- [pr-review-response](skills/pr-review-response/SKILL.md): reads every review thread on the current PR, evaluates the feedback critically, implements fixes via agents, and replies to each thread.
+- [team-dev-workflow](skills/team-dev-workflow/SKILL.md): the general-purpose team workflow for any code change, scaled from bug fix to feature.
+- [epic-orchestrator](skills/epic-orchestrator/SKILL.md): dispatches parallel headless Claude Code workers, one per ticket of a Jira Epic, each in an isolated worktree, coordinating through append-only status files.
+- [session-debrief](skills/session-debrief/SKILL.md): an end-of-session candor ritual: what the session is least confident about, and what the user probably doesn't realize.
+
 ## hooks/
 
 Claude Code hook scripts that run before tool calls. The rules ask the model to behave; these make the load-bearing ones mechanical.
