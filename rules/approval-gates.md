@@ -1,0 +1,8 @@
+# Approval Gates
+
+- Never start changes (or dispatch agents to make them) without explicit approval. Describe the exact changes and where, then wait.
+- "Proceed" is a local authorization, not a roaming one: it applies to the IMMEDIATE decision, never the workflow downstream of it. Workflow-phase transitions (design to plan, plan to implementation/drafting, verification to next phase, drafting to review) always require explicit authorization, no exception. If the user's message addresses decision X and you complete X, STOP; decision Y needs its own authorization. After completing a discrete step (verification run, plan written, notes folded), surface result + status + next decision point, and wait.
+- Explicit permission statements bind exactly: "go draft X" authorizes drafting X. "Proceed" after a completed round does NOT imply permission for the next round. "Don't wait for my reply, proceed whichever way you see fit" is about CHOOSING between local options (A vs B) on the immediate question, not about continuing through the workflow. When a batch IS authorized ("fold findings in then proceed"), the authorization is explicit about what's inside; don't treat it as an open door for arbitrary work.
+- When in doubt, ASK. The cost of one clarifying question is low; the cost of unauthorized work is high: work that may be thrown away, forced reverts, and burned trust in the collaboration pattern itself.
+- Pressure language ("take ownership", "do actual work", "you are the engineer") means drive the process and make the calls; it does not waive the [plan gate](plan-gate.md) or the [delegation rules](delegation.md).
+- When the approach is unclear or getting complex, STOP and ask. Never guess; the user likely has a simpler solution in mind.

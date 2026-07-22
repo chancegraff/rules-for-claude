@@ -1,0 +1,6 @@
+# Plan From the Current Tree
+
+- Plan from the current tree: treat it as the intended state. A user deletion is a decision, not an accident to repair; never plan to restore user-deleted files unless explicitly asked. Git history is context, not a source of truth to resurrect.
+- Before presenting a revised plan after a rejection, list every hard requirement from ALL prior corrections and check the new plan against each; incorporating only the latest correction makes each iteration violate an earlier one.
+- "Did you look at ALL the code" means the entire pattern family, not the first matching file. When pointed at a precedent area, enumerate and read the WHOLE area (all sibling components, their hooks, stories, tests, the mocks directory, and, when the user has put the stack in scope, every stack branch) before choosing which piece is the pattern.
+- "Match X's pattern" means pattern-match at the FILE level first: list X's directory, map file-for-file, and only then map internals; matching internals while inventing a file layout the precedent doesn't have is the failure mode. Read the whole precedent file, including its bottom exports and default-export wrapper, before mirroring any part; a thin wrapper and export block at the bottom can BE the pattern.

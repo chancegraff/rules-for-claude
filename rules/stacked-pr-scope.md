@@ -1,0 +1,5 @@
+# Stacked PR Scope
+
+- Existing PRs in a stack already define their scope. Never re-ask what a PR should contain, never shrink one to a stub, never merge scopes across PRs; fix each PR so ITS slice matches the design (XS-SM each). The user partitions stacked PRs strictly (e.g. one value type per PR) and wants separate commits per logical step. Partial plans and scope re-litigation waste review cycles.
+- When working ONE PR's feedback, stay inside that PR: don't cross-reference sibling/downstream branches' code to answer questions, don't fold their consistency implications into the answer, don't plan their fixes. Consult other branches only when the user explicitly puts the stack in scope. When the user does put the stack in scope, they own the whole chain: review feedback on one PR obligates fixing every PR it cascades to.
+- Stack remediation procedure: enumerate the stack, pull every PR's threads and diffs, do the full design-vs-build audit, then write one complete per-PR plan before touching code.

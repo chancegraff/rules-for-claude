@@ -1,0 +1,5 @@
+# No Scripts
+
+- Scripts are banned in ALL forms: inline executors (`node -e`, `bun -e`, `tsx -e`, heredoc-into-interpreter), standalone `.ts`/`.js` script files for ad-hoc/migration/automation/one-off work (even committed to a `scripts/` directory), Bash command strings that embed inline program logic, and anything where the unit of work is "I write a script and run it". Investigations and audits work from reading existing code, not throwaway executable code.
+- Code goes into the package's actual source tree: library functions, CLI subcommands, hook entry-points, MCP tool surface; things that are tested, linted, type-checked, and have a documented purpose. "Scripts" implies one-off, untested, throwaway code, which is the prohibited category. Library functions ARE allowed because they're tested, exported, and consumed via the proper interface; scripts are not because they bypass it. Bulk/migration work is delegation territory ([delegation](delegation.md)), not script territory.
+- When dispatching subagents, include the no-scripts rule in their prompt explicitly; it extends to anything they might write that doesn't live in the source tree as a tested module.

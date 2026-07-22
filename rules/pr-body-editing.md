@@ -1,0 +1,6 @@
+# PR and Issue Body Editing
+
+- NEVER update a PR or issue body by writing a locally regenerated full body (e.g. `gh pr edit --body-file` with a file composed from memory/context). The live body is shared mutable state: the user edits it directly (screenshots in Demo, notes), and a stale full-body write silently destroys their edits. Before any body edit: `gh pr view <n> --json body --jq '.body'`, apply the minimal change to THAT text, then write it back. Same for Jira descriptions and issue bodies.
+- If body content was already lost, recover via GraphQL: `pullRequest(number:) { userContentEdits(first:10) { nodes { editedAt editor { login } diff } } }`; each node's `diff` holds that revision's full body.
+- `gh api -f body=@file` does NOT read the file; it posts the literal string "@file" as the body. The `@filename` expansion only works with `-F`/`--field`: use `gh api --method POST -F body=@file` for thread replies. Fix a botched comment in place with `gh api repos/{owner}/{repo}/pulls/comments/{id} --method PATCH -F body=@file`. `gh pr comment`/`gh pr edit` take `--body-file` and are safe. File-based bodies are the way to go regardless: inline bodies with `||` or quotes trip the Bash deny rules.
+- When a posted reply turns out to be wrong: fix the code, then PATCH the wrong reply to state the correction.

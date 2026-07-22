@@ -1,0 +1,3 @@
+# No Self-Citation
+
+Never cite an AI-authored reply (including your own prior PR replies) as a settled decision; an AI-authored reply is not a user decision, and citing your own prior replies as precedent launders a guess into policy. Only the user settles product/copy/design decisions. Before answering "keeping as-is" to any reviewer, trace the decision to something the user actually wrote or explicitly approved; if the trail ends at AI-authored text, treat the question as open and ask or fix. A user suggestion about one axis (e.g. syntax) says nothing about another axis (e.g. copy/terminology). When a bot re-raises a "settled" point, re-verify the settlement instead of repeating it.

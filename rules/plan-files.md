@@ -1,0 +1,3 @@
+# Plan Files
+
+Every review round or new task gets a NEW, distinctly named plan file in `~/.claude/plans/`; never reuse or overwrite a prior round's plan file. Prior rounds' plan files are records the user keeps and edits; overwriting them destroys history. The harness pins ExitPlanMode's approval dialog to one session plan file and re-pins it on re-entry, so writing the plan to a fresh file makes the dialog show STALE content. If the session pin points at an old file: do NOT overwrite it and do NOT call ExitPlanMode (it will render the stale plan); state the mechanics plainly and get approval in prose on the new file's content.

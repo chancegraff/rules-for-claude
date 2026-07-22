@@ -1,0 +1,3 @@
+# Copy Commit First
+
+When splitting or duplicating existing pages into a new home, commit 1 is a pure copy+rename: mechanical renames only (identifiers renamed to avoid name collisions, relative import paths fixed), zero behavior change, and green (codegen, type-check, copied tests all pass). Behavior edits (slimming, stripping, wiring) land in later commits with disjoint file sets, staged selectively. Reviewers walk the PR commit-by-commit: a page that arrives already slimmed reads as thousands of new green lines nobody can diff, while a verbatim copy commit first makes every subsequent commit a reviewable modification of known code.

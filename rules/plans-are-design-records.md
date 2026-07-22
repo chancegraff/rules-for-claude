@@ -1,0 +1,3 @@
+# Plans Are Design Records
+
+Plans are design records, not implementation logs; they live as the record of what was decided. A refinement to an already-shipped implementation (splitting one call into two, changing thresholds, swapping models) is implementation evolution: it does not re-decide the architecture and does not get encoded in the plan. When the user approves such a refinement, skip the plan-rewrite step entirely and go straight to the agent dispatch with a focused brief that captures the refinement scope; the plan is referenced in the brief but not edited. Plan rewrites are reserved for architectural pivots, which warrant a NEW plan.

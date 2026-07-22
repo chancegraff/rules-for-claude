@@ -1,0 +1,3 @@
+# Dead-Code Closure
+
+Deleting a file deletes its entire dead-code closure: before proposing any deletion, walk the imports of the doomed file and LSP find_references every symbol it was consuming; anything whose last consumer disappears is deleted in the same change, recursively (stories, decorators, exports, imports). "It's used by Storybook/CI automatically" does not count as a consumer. A deletion that strands its dependencies ships dead code, and when generated artifacts are involved it plants latent type-check breakage: an import of a generated module whose source document was deleted fails on the next codegen.

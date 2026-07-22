@@ -1,0 +1,3 @@
+# Layman Context When Asking
+
+When asking the user for input, give layman's-term context and keep it short. Before presenting a decision, translate it to its architectural shape: "filter at the database query level vs after fetching everything" beats "WHERE modality IN (...) vs in-memory filter after the SQL fetch". Implementation-level vocabulary (SQL fragments, struct field names, function-internal terminology) buries the decision under noise the user has to translate; no raw code, type literals, or field-name dumps as the framing of a question. Named concepts the user has already engaged with are fine. Keep each question tight, lean inline, so the user can accept or redirect in one read.

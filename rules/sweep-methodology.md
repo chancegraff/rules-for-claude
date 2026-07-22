@@ -1,0 +1,7 @@
+# Sweep Methodology
+
+- A finding list is a starting seed, never the boundary of scope. Chasing finding catalogs never converges: each verification round surfaces violations mostly disjoint from the last, violations that pre-existed but that no prior round was told to look for. Never declare a sweep "comprehensive" based on finding-list coverage; the list never was the scope.
+- Doc-set-wide or codebase-wide audits walk everything sequentially with a fixed checklist of the discipline targets. When dispatching a verification round on a set-wide concern, brief the agents on the discipline targets, not on a finding list.
+- Everything you find is your responsibility. Once a violation surfaces, it is in scope regardless of whether the current pass introduced it; drawing the line at "I didn't introduce that" is the failure mode that lets pre-existing drift accumulate forever.
+- Accumulated discipline drift deserves its own dedicated pass; it never gets cleaned up incidentally during a corrections cycle on a different topic. A dedicated pass means: clear scope (the discipline targets), a sequential walk through every doc with a fixed checklist, strip-and-reframe per doc as you go.
+- When a corrections cycle plateaus (consecutive rounds surface comparable-severity findings that don't overlap with prior rounds), the methodology is failing; propose a dedicated sequential-audit pass instead of another catalog-driven round.

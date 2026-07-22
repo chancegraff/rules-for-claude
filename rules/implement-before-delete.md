@@ -1,0 +1,3 @@
+# Implement Before Delete
+
+Never delete or `git rm` old files (or resolve delete-side conflicts) before the replacement implementation exists and is verified. Deleting first leaves the tree in a broken intermediate state where nothing carries the feature, and the old files are still reference material (copy, structure) for the rebuild. In any refactor, rename, or rebase-conflict resolution: (1) build the replacement, (2) verify it, (3) only then delete the superseded files and stage everything together. Removal is a commit-time act, not a kickoff act. Order every plan's execution section this way explicitly.
