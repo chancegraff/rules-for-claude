@@ -4,6 +4,8 @@ Global rules for Claude Code. Each file in `rules/` is a standing instruction th
 
 To use one, copy it into your own `~/.claude/rules/`.
 
+Two more pieces of the same setup live alongside the rules: [`CLAUDE.md`](CLAUDE.md), the global instruction file Claude Code loads at the start of every session, and [`hooks/`](hooks), Claude Code hook scripts that enforce some of these rules mechanically (blocking grep in favor of LSP navigation, blocking `git commit --no-verify`, redirecting denied command shapes).
+
 ## Where to start
 
 These rules are broadly applicable regardless of setup or stack. The rest of the collection is more tied to my own tooling and workflows.
