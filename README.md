@@ -33,21 +33,31 @@ These rules are broadly applicable regardless of setup or stack. The rest of the
 
 ## hooks/
 
-Claude Code hook scripts, registered in `settings.json` (not included here), that run before or after tool calls. The rules ask the model to behave; these make the load-bearing ones mechanical. Most enforce LSP-first code navigation, the rest block specific harmful command shapes.
-
-The LSP-first chain:
-
-- [lsp-first-guard.js](hooks/lsp-first-guard.js): blocks the Grep tool on code symbols and suggests the LSP equivalent.
-- [bash-grep-block.js](hooks/bash-grep-block.js): the same block for `grep`/`rg`/`ag`/`ack` inside shell commands; `git grep`, non-code paths, and non-code file types pass.
-- [lsp-first-glob-guard.js](hooks/lsp-first-glob-guard.js): blocks Glob patterns that hunt code symbols by filename (`*UserService*`); extension and concept globs pass.
-- [lsp-first-read-guard.js](hooks/lsp-first-read-guard.js): gates Read on code files behind an LSP warmup call and navigation quotas, so code exploration goes through the language server instead of raw file dumps.
-- [lsp-usage-tracker.js](hooks/lsp-usage-tracker.js): counts successful LSP calls into session state the read guard consults.
-- [lsp-session-reset.js](hooks/lsp-session-reset.js): wipes that state at session start so a new session can't inherit a bypass from the previous one.
-- [lsp-pre-delegation.js](hooks/lsp-pre-delegation.js): injects LSP-first context into the briefs of code-exploration subagents; agent types that don't navigate code are exempt.
-- [lib/detect-lsp-provider.js](hooks/lib/detect-lsp-provider.js): shared helper that detects the active LSP MCP server (cclsp, Serena) and builds the block messages the guards emit.
-
-Standalone guards:
+Claude Code hook scripts that run before tool calls. The rules ask the model to behave; these make the load-bearing ones mechanical.
 
 - [deny-rule-redirect.js](hooks/deny-rule-redirect.js): when a Bash command matches a `settings.json` deny rule, names the exact rule that fired and the tool to use instead, so the agent self-corrects rather than guessing.
 - [git-no-verify-block.js](hooks/git-no-verify-block.js): blocks every known form of git hook bypass on commit and push (`--no-verify`, `-n`, `core.hooksPath` overrides via flag or environment).
 - [yarn-test-root-block.js](hooks/yarn-test-root-block.js): blocks `yarn test` from a monorepo root, where it would run every package's suite; subpackage runs pass.
+
+They register in `~/.claude/settings.json` as PreToolUse hooks on Bash:
+
+```json
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          { "type": "command", "command": "node ~/.claude/hooks/deny-rule-redirect.js" },
+          { "type": "command", "command": "node ~/.claude/hooks/yarn-test-root-block.js" },
+          { "type": "command", "command": "node ~/.claude/hooks/git-no-verify-block.js" }
+        ]
+      }
+    ]
+  }
+}
+```
+
+### LSP-first enforcement
+
+My setup also enforces LSP-first code navigation (the [grep-banned](rules/grep-banned.md) rule): Grep, symbol-hunting Glob patterns, and shell grep on code symbols are blocked, and Reads of code files are gated behind language-server warmup. The hooks that do this come from [claude-code-lsp-enforcement-kit](https://github.com/nesaminua/claude-code-lsp-enforcement-kit) (MIT) and aren't mirrored here; its installer copies the scripts into `~/.claude/hooks/` and merges their `settings.json` registration.
