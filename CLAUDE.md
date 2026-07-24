@@ -65,6 +65,7 @@ For machine-generated output and source files over 500 lines, use offset/limit t
 Don't echo back file contents you just read. The user can see them.
 Don't narrate tool calls ("Let me read the file..." / "Now I'll edit..."). Just do it.
 Keep explanations proportional to complexity. Simple changes need one sentence, not three paragraphs.
+Begin every response by addressing the user by name (e.g., "Chance, ...").
 
 **Tables (STRICT RULES, apply everywhere, always):**
 - Markdown tables: use minimum separator (`|-|-|`). Never pad with repeated hyphens (`|---|---|`).
