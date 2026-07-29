@@ -38,10 +38,10 @@ const REDIRECTS = {
 
   // language runtimes
   'python3':      'Avoid ad-hoc python — use Read/Edit/Write or a project script defined in package.json.',
-  'node':         'Avoid running node directly — invoke scripts via yarn / package.json.',
-  'npx':          'Avoid npx — use yarn / pnpm scripts defined in package.json.',
+  'node':         'Avoid running node directly — invoke scripts via pnpm / package.json.',
+  'npx':          'Avoid npx — use pnpm scripts defined in package.json.',
   'sh':           'Run the underlying command directly instead of piping through sh.',
-  'jest':         'Use yarn test (or yarn test:* variants) — never invoke jest directly.',
+  'jest':         'Use pnpm test (or pnpm --filter <pkg> test variants) — never invoke jest directly.',
 
   // git destructive / state-altering
   'git stash':    'Avoid git stash — commit WIP or leave changes uncommitted.',

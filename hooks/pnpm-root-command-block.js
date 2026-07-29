@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 'use strict';
 
-// yarn-test-root-block.js — PreToolUse hook (matcher: Bash)
+// pnpm-root-command-block.js — PreToolUse hook (matcher: Bash)
 // Blocks running `test`, `lint`, or `check-types`/`tsc` across the
 // frontend-code monorepo ROOT (pnpm, or the legacy yarn form) — including any
 // git worktree of it. Detection is based on the package.json at the session
