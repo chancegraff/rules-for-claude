@@ -4,8 +4,8 @@ description: >
   Workflow for advancing in-progress work on the current branch, at any stage, through to
   review-ready. Assesses where the branch stands (uncommitted changes, unpushed commits, missing
   or stale PR, remaining ticket scope), plans what is left, implements via a team of specialist
-  agents, verifies, and ships the result: committed, pushed, PR created or updated, Jira
-  transitioned. Use when the user invokes /work-the-branch.
+  agents, verifies, and ships the result: committed, pushed, PR created or updated.
+  Use when the user invokes /work-the-branch.
 ---
 
 # Work the Branch
@@ -323,7 +323,7 @@ Verification covers the whole branch, not just this session's changes. The in-fl
 What Phase 5 will do, based on the state found in Phase 1: commit and push; create the PR or update the existing PR's description; transition the Jira ticket (or note there is none).
 
 **7. Completion Criteria**
-What "done" looks like: all tasks complete, all reviews approved, all verification commands pass, branch pushed, PR accurate and open, ticket transitioned. For bug items, additionally: each Wave A reproducer is committed and passing on the final branch.
+What "done" looks like: all tasks complete, all reviews approved, all verification commands pass, branch pushed, PR accurate and open. The ticket stays in its current status; it moves to Code Review later, via `pr-review-response`, once both Codex and the user approve. For bug items, additionally: each Wave A reproducer is committed and passing on the final branch.
 
 ### Present the Plan to the User
 
@@ -500,16 +500,9 @@ Before moving to Phase 5, confirm:
    gh pr comment {number} --body "<summary>"
    ```
 
-### Transition the Jira Ticket
+### Leave the Jira Ticket in Progress
 
-Only if a ticket was identified in Phase 1 and the branch now covers its full scope:
-
-1. Fetch available transitions: `mcp__plugin_atlassian_atlassian__getTransitionsForJiraIssue`
-2. Identify the appropriate transition (look for "In Review", "Ready for Review", "Code Review", "PR Submitted")
-3. Execute it: `mcp__plugin_atlassian_atlassian__transitionJiraIssue`
-4. If no obvious review transition exists, inform the user and let them decide
-
-If the session's objective was a partial advance and ticket scope remains, leave the ticket in its current status and say so in the report.
+Do not transition the ticket to Code Review here. Regardless of scope, the ticket moves to Code Review only after both Codex and the user have approved on the PR, and this workflow ends at review-ready, before any review exists. `pr-review-response` handles that gated transition once approvals land. Leave the ticket in its current status.
 
 ### Report to the User
 
@@ -517,7 +510,7 @@ Inform the user that the session's work is complete:
 
 - Link to the PR (and whether it was created or updated)
 - What this session accomplished relative to the state summary from Phase 1
-- Confirmation of the Jira transition, or why the ticket was left where it was
+- Note that the ticket stays in its current status; it moves to Code Review once both Codex and you have approved the PR (via `pr-review-response`)
 - Anything that remains before the branch is fully done, if the objective was partial
 - Note that the Demo section of the PR needs their input (if applicable)
 

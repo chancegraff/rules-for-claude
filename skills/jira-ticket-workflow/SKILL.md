@@ -266,7 +266,7 @@ Commands to run after all implementation is complete. These commands must always
 3. **Verify**: Run `yarn format:check`, `yarn lint`, `yarn check-types`, `yarn test`.
 
 **6. Completion Criteria**
-What "done" looks like: all tasks complete, all reviews approved, all verification commands pass, PR created, Jira ticket transitioned. For bug tickets, additionally: Wave A's reproducer is committed and passing on the final branch.
+What "done" looks like: all tasks complete, all reviews approved, all verification commands pass, PR created. The ticket stays in its current status; it moves to Code Review later, via `pr-review-response`, once both Codex and the user approve. For bug tickets, additionally: Wave A's reproducer is committed and passing on the final branch.
 
 ### Present the Plan to the User
 
@@ -431,12 +431,9 @@ gh pr comment --body "@codex Review"
 
 The comment body must be exactly `@codex Review` — do not append the AI attribution footer, since the bot trigger requires an exact match.
 
-### Transition the Jira Ticket
+### Leave the Jira Ticket in Progress
 
-1. Fetch available transitions: `mcp__plugin_atlassian_atlassian__getTransitionsForJiraIssue`
-2. Identify the appropriate transition (look for states like "In Review", "Ready for Review", "Code Review", "PR Submitted")
-3. Execute the transition: `mcp__plugin_atlassian_atlassian__transitionJiraIssue`
-4. If no obvious review transition exists, inform the user and let them decide
+Do not transition the ticket to Code Review here. The ticket moves to Code Review only after both Codex and the user have approved on the PR, and the PR was just opened, so no review exists yet. `pr-review-response` handles that gated transition once approvals land. Leave the ticket in its current status.
 
 ### Report to the User
 
@@ -444,7 +441,7 @@ Inform the user that all work is complete:
 
 - Link to the PR
 - Summary of what was implemented (brief, not a rehash of the PR description)
-- Confirmation that the Jira ticket was transitioned
+- Note that the ticket stays in its current status; it moves to Code Review once both Codex and you have approved the PR (via `pr-review-response`)
 - Note that the Demo section of the PR needs their input (if applicable)
 
 Do not mention sneak previews, CI status, or other information meant for human reviewers of the PR. Keep the report focused on what the user needs to know or act on.

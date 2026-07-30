@@ -476,6 +476,20 @@ gh pr edit {number} --add-reviewer {reviewer1},{reviewer2},...
 
 Use the GitHub usernames collected during Phase 1. Include every reviewer who had open threads, regardless of whether you implemented their feedback or pushed back.
 
+### Transition the Jira Ticket
+
+Move the linked Jira ticket to Code Review only when both approvals are present on the PR. Until both hold, leave the ticket in its current status.
+
+1. **Codex has approved.** Its most recent review shows no open P1/P2/P3 findings and no unresolved inline change requests (the "no major issues" state, not merely a COMMENTED review). A review still carrying actionable findings is not an approval.
+2. **The user has approved in a comment.** Read the PR's comments and judge, in context, whether the user has signalled approval to move forward. This is your judgment, not a keyword match: "looks good, ship it" or a plain "approved" counts; a question, a nit, or no comment does not. The user authors this PR, so GitHub blocks a formal Approve review; the signal is always a plain comment.
+
+When and only when both hold:
+1. Fetch available transitions: `mcp__plugin_atlassian_atlassian__getTransitionsForJiraIssue`
+2. Identify the Code Review transition (states like "Code Review", "In Review", "Ready for Review", "PR Submitted")
+3. Execute it: `mcp__plugin_atlassian_atlassian__transitionJiraIssue`
+
+If either approval is missing, do not transition, and say so in the report.
+
 ### Report to the User
 
 Inform the user that all work is complete:
@@ -484,6 +498,7 @@ Inform the user that all work is complete:
 - How many review threads were responded to, broken down by strategy (implemented, discussed, deferred, etc.)
 - Any threads where you pushed back or deferred, so the user can follow up if needed
 - Which reviewers were re-requested for review
+- Whether the ticket moved to Code Review (both Codex and you approved), or that it stays in its current status pending one or both approvals
 - Any CI checks the user should monitor
 - Link to the PR
 
