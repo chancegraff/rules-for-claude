@@ -38,6 +38,8 @@ These rules apply throughout the entire workflow. They are not guidelines. Viola
 
 **No box-drawing characters in output.** Never use characters like `+`, `|`, `-` to draw ASCII table borders, and never use Unicode box-drawing characters. Use markdown tables with minimal separators (`|-|-|`) or plain bullet lists.
 
+**Invoke stop-slop before drafting prose.** Before drafting any public-facing text (thread replies, PR comments, PR description updates, top-level summary comments), invoke the `stop-slop` skill via the Skill tool and apply its rules to every draft. One invocation per session is enough; its rules then govern all subsequent drafts.
+
 ## AI Attribution
 
 Public-facing messages you author (PR comments, thread replies, PR description updates) must include a standardized attribution footer so reviewers always know they are reading AI-generated text. Determine the user's GitHub username from the PR author field or `gh api user --jq '.login'`, then use this footer:

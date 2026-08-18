@@ -88,6 +88,8 @@ These rules apply throughout the entire workflow. They are not guidelines. Viola
 
 **No box-drawing characters in output.** Never use Unicode box-drawing characters or ASCII-art table borders. Use markdown tables with minimal separators (`|-|-|`) or plain bullet lists.
 
+**Invoke stop-slop before drafting prose.** Before drafting any public-facing text (PR descriptions, PR comments, Jira comments), invoke the `stop-slop` skill via the Skill tool and apply its rules to every draft. One invocation per session is enough; its rules then govern all subsequent drafts. The exact-match bot trigger comment (`@codex Review`) is not prose and is exempt.
+
 ## AI Attribution
 
 Public-facing messages you author (PR descriptions, PR comments, Jira comments) must include a standardized attribution footer so reviewers and stakeholders always know they are reading AI-generated text. Determine the user's GitHub username from `gh api user --jq '.login'`, then use this footer:
