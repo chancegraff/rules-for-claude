@@ -32,7 +32,7 @@ Each seat audits the whole plan every round, and reports every site that fails i
 1. **Ownership auditor.** Enumerate every file the plan commits an edit in. Confirm the ownership table names each one. Return the full enumeration alongside the verdict.
 2. **Counts auditor.** Enumerate every numeric claim and ordinal. Recompute each one. Flag every derived number for removal (drafting rule 2).
 3. **Code-citation auditor.** Re-verify every code citation whose surrounding text changed since its last verification. Use the coverage ledger to skip rows that are verified and unchanged.
-4. **Cross-consistency auditor.** Check every pair of sites that state related facts: design section against roster, plan against sibling plans, plan against standing board calls. Flag restatements for conversion to references.
+4. **Cross-consistency auditor.** Check every pair of sites that state related facts: design section against roster, plan against standing board calls. Flag restatements for conversion to references. A passage discussing another plan's content is a defect on sight: plans are self-contained, and the fix is removal, not reconciliation.
 5. **Executor.** Walk the plan's waves command by command. Track the tree state as you go. Run every machine-checkable check: file modes, symlinks, output shapes, path existence. Report every step that cannot run as written.
 6. **Stage-duty auditor.** Walk every row of every stage table the plan carries. Confirm each cell satisfies every decision that names that stage. Confirm every value a Returns cell states is read by at least one stage or actor. Confirm every input a Reads cell states comes from an `args` key, from a file or world fact the plan names, or from a stage or actor the plan has produce it. Confirm every duty the plan states has exactly one home and exactly one actor that performs it.
 7. **Exit-kind auditor.** Enumerate every exit kind and every halt kind the plan defines. Trace each one end to end, from its trigger, through the record it writes, to its recovery. Confirm that every pair of kinds one round can carry at once is either ordered or shown impossible.
@@ -89,6 +89,10 @@ Each round's record carries:
 - The next round's target set and claim-inventory table.
 
 **Lead-recorded edits.** Between runs, the lead can record edits in a round's section: a correction, a purely additive edit, a design-call adjudication, or a plateau structural fix. Each recorded edit carries byte-exact CURRENT and REPLACEMENT blocks, a one-line claim, and its nitpick-or-real tag. The lead adds or changes the claim-inventory rows those edits create, and puts their sites in that round's verify-new site list. The relaunched round's synthesizer carries every recorded block into application exactly as recorded. Recorded text skips the replacement review. A recorded block supersedes any synthesis block at the same site.
+
+**The two-file form.** The live coverage ledger holds the launch marks, the two most recent round records, and the current target set. Every older round record lives verbatim in `ledger-archive.md` beside it, located through `ledger-archive-index.md`: one index line per archived section, naming the section heading and the archive line it starts at. The ledger-writer moves sections at round close. History is never deleted, only moved: a section lives in exactly one of the two files. The synthesizer reads both files in full, the complete history; the audit seats read the live file and pull archived sections on demand through the index.
+
+Citations into frozen sources are verified once; only a change in the citing text re-opens them.
 
 ## Approval bar
 

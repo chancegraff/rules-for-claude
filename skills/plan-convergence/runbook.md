@@ -16,6 +16,10 @@ Run every check at every launch.
 
 ## 2. Crash recovery
 
+Ledger sections older than the two most recent recorded rounds live in `ledger-archive.md` in the state directory, located via `ledger-archive-index.md`: read the index for the section's heading and start line, then read that one section with an offset read.
+
+Per-round, per-worker usage rows land in usage-metrics.md in the plan's state directory, appended by the round-close usage auditor; a round with no rows means that round's auditor failed, which never blocks the round.
+
 ### Exit kinds and precedence
 
 Every exit and halt ends the run by returning its kind, the round it ended on, the state directory, and, where that round's synthesizer returned, the synthesis path. The kinds, highest first: runtime failure, reserved decision, design call, plateau, converged. One round can satisfy more than one kind, and ends on exactly one, the highest. A mid-flight stop returns nothing; the lead's recovery supplies its kind for the board record. On the null-ledger-writer path and on a mid-flight stop, runtime failure heads the order with no stage to render it.
