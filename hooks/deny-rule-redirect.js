@@ -38,7 +38,9 @@ const REDIRECTS = {
 
   // language runtimes
   'python3':      'Avoid ad-hoc python — use Read/Edit/Write or a project script defined in package.json.',
-  'node':         'Avoid running node directly — invoke scripts via pnpm / package.json.',
+  'node':         'Inline scripts are banned. Write the code to a file in the source tree and run that file with node.',
+  'NODE_OPTIONS=': 'Inline scripts are banned. Write the code to a file in the source tree and run that file with node.',
+  'deno':         'Inline deno eval, repl, and stdin scripts are banned. Write the code to a file and run that file.',
   'npx':          'Avoid npx — use pnpm scripts defined in package.json.',
   'sh':           'Run the underlying command directly instead of piping through sh.',
   'jest':         'Use pnpm test (or pnpm --filter <pkg> test variants) — never invoke jest directly.',
