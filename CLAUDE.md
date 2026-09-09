@@ -1,3 +1,4 @@
+
 ## Global Coding Standards
 
 * NEVER use type casting
