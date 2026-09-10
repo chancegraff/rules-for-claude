@@ -5,7 +5,7 @@
 // hook. Each case spawns the hook with a Bash tool_input on stdin and checks
 // the permission decision.
 //
-// Run with: node --test /Users/cgraff/.claude/hooks/inline-script-block.test.js
+// Run with: node --test /Users/cgraff/.work/hooks/inline-script-block.test.js
 
 const test = require('node:test');
 const assert = require('node:assert/strict');
@@ -201,7 +201,7 @@ const ALLOW = [
   'node --max-old-space-size 4096 build.js',
   'node -C development file.js',
   'node --title myapp file.js',
-  'node ~/.claude/skills/archify/bin/archify.mjs deliver architecture spec.json out.html --quality showcase --json',
+  'node ~/.work/skills/archify/bin/archify.mjs deliver architecture spec.json out.html --quality showcase --json',
   'node build.js --import=data:text/javascript,x',
   'pnpm node file.js',
   'timeout 5 node file.js',

@@ -2,7 +2,7 @@
 'use strict';
 
 // deny-rule-redirect.js — PreToolUse hook (matcher: Bash)
-// Reads Bash(...) deny rules from ~/.claude/settings.json, matches the
+// Reads Bash(...) deny rules from ~/.work/settings.json, matches the
 // incoming command against each pattern, and on a hit emits a structured
 // block response naming the exact rule + a redirect to the right tool.
 //
@@ -18,7 +18,7 @@ const fs = require('fs');
 const os = require('os');
 const path = require('path');
 
-const SETTINGS_PATH = path.join(os.homedir(), '.claude', 'settings.json');
+const SETTINGS_PATH = path.join(os.homedir(), '.work', 'settings.json');
 
 // ── Redirect map: rule "subject" → suggested alternative ──────────────────
 // Subject is the cleaned form of the pattern (see describeRule below).
@@ -180,7 +180,7 @@ process.stdin.on('end', () => {
   const redirects = uniqueSuggestions.map(s => `  → ${s}`).join('\n');
 
   const reason =
-    `Command blocked by user-level deny rule(s) in ~/.claude/settings.json:\n` +
+    `Command blocked by user-level deny rule(s) in ~/.work/settings.json:\n` +
     `${ruleList}\n\n` +
     `Command: ${cmd}\n\n` +
     `Redirect:\n${redirects}`;
