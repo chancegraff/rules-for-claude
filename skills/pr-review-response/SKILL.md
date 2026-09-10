@@ -30,7 +30,7 @@ You are acting as the PR author, which means you represent the user's engineerin
 
 These rules apply throughout the entire workflow. They are not guidelines. Violating any of them is a workflow failure.
 
-**No inline scripts.** Never write or execute inline scripts (Python, Node, shell scripts, etc.) to accomplish tasks. This means no `python3 -c`, no `node -e`, no heredoc scripts piped to interpreters. Use dedicated tools (Read, Grep, Glob, Edit, Bash for CLI commands) and the `gh` CLI with `--jq` for JSON filtering. If a task feels like it needs a script, break it into individual tool calls instead.
+**No inline scripts.** Never write or execute inline scripts (Python, Node, shell scripts, etc.) to accomplish tasks. This means no `python3 -c`, no `node -e`, no heredoc scripts piped to interpreters. Use dedicated tools (Read, LSP, Glob, ls and find, Edit, Bash for CLI commands) and the `gh` CLI with `--jq` for JSON filtering. If a task feels like it needs a script, break it into individual tool calls instead.
 
 **No skipping steps.** Every phase has a gate checklist at the end. You must complete every item on the checklist before moving to the next phase. If you feel the urge to skip ahead because things are going well, that is exactly when you are most likely to miss something.
 
@@ -124,7 +124,7 @@ To evaluate feedback intelligently, you need context beyond the PR itself:
 3. **Gather linked external resources** from the PR description, comments, and any linked Jira ticket:
    - **PRDs, tech specs, RFCs**: Look for linked foundational documents. These can live in either place:
      - **Google Workspace** (Docs, Sheets, Slides): Use the `gws` CLI. Run `gws --help` if unfamiliar with the tool.
-     - **Confluence**: Fetch using `mcp__plugin_atlassian_atlassian__getConfluencePage`.
+     - **Confluence**: Fetch using `mcp__plugin_atlassian_atlassian__getConfluenceContent`.
    - **Figma URLs** (figma.com/design/..., figma.com/board/...): Use the Figma MCP tools (invoke the `figma-use` skill first, then `get_design_context` or `get_screenshot`) to fetch design context. This helps evaluate whether reviewer feedback aligns with the intended design.
    - **Jira attachments**: Download and read any attached files from the linked ticket.
 4. **Read relevant CLAUDE.md files** in the directories where changes were made. These contain domain-specific rules that inform whether reviewer suggestions align with project conventions.
@@ -240,13 +240,13 @@ You cannot plan a fix for a bug whose root cause is unknown, so the bug track is
 - **Wave B — Fix and verify (to be written after Wave A).** Leave this marked "TBD — filled in at the start of Phase 3 once Wave A reports." Note that Wave B will assign a fix task to the teammate whose domain the localized fault lives in; will use Wave A's committed reproducer as the acceptance criterion (must flip red → green, full affected test suite must pass); and will include any adjacent tasks that only become visible after localization.
 
 **4. Review Assignments**
-Cross-review between agents, same rules as the ticket workflow. Specify which agent reviews which other agent's work. Implementation agents must remain alive until cross-review is complete.
+Cross-review between agents, same rules as the ticket workflow. Specify which agent reviews which other agent's work. Implementation agents must remain alive until cross-review is complete. With one implementer, record that Phase 4 Step 3 is the review.
 
 **5. Verification Steps**
-Commands to run after implementation, always from the package directory:
-1. Generate first (`yarn relay:compile` and any package-specific generation)
-2. Auto-fix (`yarn format:write`, `yarn lint --fix`)
-3. Verify (`yarn format:check`, `yarn lint`, `yarn check-types`, `yarn test`)
+Commands to run after implementation. The repo uses pnpm. Run every command from the repo root through `--filter @attentive/<pkg>`, one command per Bash call, never with `cd`; a root-level `test`, `lint`, or `check-types` across all packages is banned. Scope `test`, `lint`, and `format:check` to the changed files as step 3 shows; `check-types` runs package-level and is the exception. Run test commands one at a time.
+1. **Generate first**: `pnpm --filter @attentive/<pkg> relay:compile`. After an install, a rebase, or any flag-fragment edit, also run `pnpm --filter @attentive/data generate` and then `pnpm --filter @attentive/mock-data generate` (several minutes each).
+2. **Auto-fix**: `pnpm --filter @attentive/<pkg> lint --fix <changed files>`. `format:write` ignores path arguments and reformats the whole package; run `pnpm --filter @attentive/<pkg> format:write` once, when no teammate is mid-edit.
+3. **Verify, scoped to the changed files**: `pnpm --filter @attentive/<pkg> format:check <changed files>`, `pnpm --filter @attentive/<pkg> lint <changed files>`, `pnpm --filter @attentive/<pkg> test <changed test files>`, then `pnpm --filter @attentive/<pkg> check-types` with no file arguments (tsc ignores tsconfig when given files). `format:check` and `lint` also scan the whole package and can report files outside the passed paths; read the file list.
 
 **6. GitHub Response Plan**
 Map each review thread to its planned response:
@@ -280,12 +280,12 @@ Before moving to Phase 3, confirm:
 
 ### Post Discussion Replies First
 
-Before any code changes, post replies to threads that don't require implementation (`Discuss`, `Defer`, `Acknowledge`, `Already addressed`). Use the GitHub API to reply to each thread:
+Before any code changes, post replies to threads that don't require implementation (`Discuss`, `Defer`, `Acknowledge`, `Already addressed`). Use the GitHub API to reply to each thread. Write each reply to a file in the session scratchpad first; `-f body=@file` posts the literal string "@file", only `-F` reads the file.
 
 ```bash
 gh api repos/{owner}/{repo}/pulls/{number}/comments \
   --method POST \
-  -f body="<reply text>" \
+  -F body=@<file> \
   -F in_reply_to=<thread_root_comment_id>
 ```
 
@@ -293,22 +293,20 @@ This gives reviewers early signal that their feedback is being addressed and ope
 
 ### Delegate Implementation
 
-Create the Team first using `TeamCreate` with a descriptive team name (e.g., `pr-review-{number}`).
+The session has one implicit team, formed on the first teammate spawn; there is no create step.
 
-For each wave of implementation tasks, spawn teammates using the Agent tool with `team_name` parameter:
+For each wave of implementation tasks, spawn teammates using the Agent tool with `name` set:
 
 - Use a descriptive `name` matching the team roster
-- Include the `team_name` parameter to associate the teammate with the team
 - Include full task context: what to change, which files, acceptance criteria, the review comment text that motivated the change
 - Point agents to relevant CLAUDE.md files and style guide sections
 - Remind agents of coding standards: no `any`, no type casting, hooks in their own files, no prop drilling
-- Set `mode: "auto"` for implementation agents
 
 ### Verify Wave Completion — standard track
 
 When all agents in a wave report back:
 1. Verify outputs meet task acceptance criteria
-2. If an agent's work is incomplete, re-delegate with specific feedback
+2. If an agent's work is incomplete, re-delegate with specific feedback. After two re-delegations still incomplete, stop and surface it to the user.
 3. Advance to the next wave when the current one is fully verified
 
 ### Execute the Bug Track (only if any thread is `bug`)
@@ -320,7 +318,7 @@ The bug track runs in parallel with the standard track's waves — they do not b
 2. **Verify Wave A — this is a real gate, not a formality.** When the teammate reports back, the team leader does the following before touching Wave B:
    - Read the committed reproducer. Run it. Confirm it fails on the current branch for the reason the teammate claims.
    - Read the teammate's localization report. Follow the code path they described. Confirm the file/function/input they named is actually where the bad value originates, not a symptom downstream of it.
-   - If the reproducer does not actually fail, or the localization does not hold up, SendMessage the teammate with specifics and iterate. Do not proceed until both hold.
+   - If the reproducer does not fail, or the localization does not hold up, SendMessage the teammate with specifics and iterate. Do not proceed until both hold. After two rounds (see Phase 4 Step 2 for the bound's source) without both holding, take the exit ramp in step 3.
 
 3. **Exit ramp: "I don't know."** If Wave A reports blocked — either "I cannot make it fail" or "I localized something but cannot explain it with near-certainty from the code" — do not plan a fix. Surface the teammate's trace, ruled-out hypotheses, and evidence needs to the user, along with the original review threads that raised the bug. Ask how to proceed. Acceptable paths: gather more context from the reviewer (ask them on the thread for repro steps, inputs, or environment), re-dispatch Wave A; narrow the scope; or reply to the reviewer explaining why you cannot reproduce and asking for help. Unacceptable paths: guessing a root cause, shipping a defensive check that hides the symptom.
 
@@ -328,7 +326,7 @@ The bug track runs in parallel with the standard track's waves — they do not b
 
 5. **Dispatch Wave B.** SendMessage the assigned teammates with the Wave B task(s).
 
-6. **Verify Wave B — red → green is the only acceptable signal.** When Wave B reports back, the team leader runs Wave A's reproducer. It must now pass. "The code looks right" and "should work now" are not verification. If the reproducer does not flip, SendMessage the teammate with specifics and iterate. The reproducer stays committed in the PR — it is part of the fix, not scaffolding.
+6. **Verify Wave B — red → green is the only acceptable signal.** When Wave B reports back, the team leader runs Wave A's reproducer. It must now pass. "The code looks right" and "should work now" are not verification. If the reproducer does not flip, SendMessage the teammate with specifics and iterate. After two rounds without a flip, stop and surface it to the user. The reproducer stays committed in the PR — it is part of the fix, not scaffolding.
 
 ### Phase 3 Gate
 
@@ -346,22 +344,15 @@ This phase has three sequential steps. All three must complete before any commit
 
 ### Step 1: Run Verification
 
-`cd` into the package directory and run the verification sequence from the plan:
+Run the plan's Verification Steps (Phase 2, item 5) as written, package-scoped through `--filter` from the repo root.
 
-1. Generate first (`yarn relay:compile` and any package-specific generation)
-2. Auto-fix (`yarn format:write`, `yarn lint --fix`)
-3. Verify (`yarn format:check`, `yarn lint`, `yarn check-types`, `yarn test`)
-
-If verification fails after auto-fix, diagnose the issue. If it is a code problem introduced by an implementation agent, delegate the fix back to that agent using SendMessage (they retain context from their original work). Then re-run the full verification sequence. Do not manually edit files to fix lint or format issues when auto-fix tools exist for that purpose.
+If verification fails after auto-fix, diagnose the issue. If it is a code problem introduced by an implementation agent, delegate the fix back to that agent using SendMessage (they retain context from their original work). Then re-run the full verification sequence. After two fix rounds still failing, stop and surface it to the user. Do not manually edit files to fix lint or format issues when auto-fix tools exist for that purpose.
 
 ### Step 2: Cross-Review
 
-Spawn reviewer teammates using the Agent tool with `team_name` and `subagent_type: "superpowers:code-reviewer"` for each review assignment in the plan. Each reviewer must:
-- Read actual source files in full (not git diffs)
-- Have the task context, acceptance criteria, and applicable standards
-- Provide specific, actionable feedback with file paths and line numbers
+No reviewer agents are spawned. The implementers review each other per the plan's review assignments. For each assignment, SendMessage the reviewing implementer a brief that includes: the exact files to review (read in full, not as diffs), the task context and acceptance criteria, and the applicable standards. Ask for specific, actionable feedback with file paths and line numbers, or an explicit approval.
 
-Process feedback the same way as the ticket workflow: changes requested means use SendMessage to the original implementation teammate with the feedback (they retain full context from their original work), then SendMessage to the reviewer teammate for re-review. Repeat until approval. All internal reviews must pass before proceeding.
+Send all review briefs in one turn. Changes requested means SendMessage the feedback to the owning implementation teammate (they retain full context), then SendMessage the same reviewer for re-review with the previous comments attached. Repeat until approval. A finding still open after two fix rounds (the thrashing threshold the jira-ticket-workflow and work-the-branch skills use) stops the loop: surface it to the user before going on. All internal reviews must pass before proceeding. With one implementer there are no cross-review assignments; Step 3 is the review.
 
 ### Step 3: Independent Code Review
 
@@ -371,7 +362,7 @@ After cross-review passes, perform your own independent review of every changed 
 - Correctness relative to the review feedback (did the change actually address what the reviewer asked for?)
 - Regressions or unintended side effects
 
-If you find issues, delegate fixes back to the relevant implementation agent, then re-run verification and re-review.
+If you find issues, delegate fixes back to the relevant implementation agent, then re-run verification and re-review. The same two-round bound applies.
 
 ### Phase 4 Gate
 
@@ -397,19 +388,19 @@ Before moving to Phase 5, confirm all three steps completed:
 
    <brief description of what changed and why>
 
-   Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>
+   <the Co-Authored-By attribution line for the current model, as given in the session's system reminder>
    ```
    If a Jira ticket is linked in the PR, use that as the prefix. Otherwise use a descriptive prefix based on the PR title.
 5. Push to the current branch: `git push`
 
 ### Reply to Implementation Threads
 
-Now that the code is pushed, reply to every review thread that was addressed by code changes. For each thread:
+Now that the code is pushed, reply to every review thread that was addressed by code changes. For each thread, write the reply to a file in the session scratchpad, then:
 
 ```bash
 gh api repos/{owner}/{repo}/pulls/{number}/comments \
   --method POST \
-  -f body="<reply text>" \
+  -F body=@<file> \
   -F in_reply_to=<thread_root_comment_id>
 ```
 
@@ -421,37 +412,19 @@ Each reply should briefly explain what was changed and why. Reference the specif
 
 Avoid generic replies like "Fixed" or "Done". The reviewer should understand what changed without having to re-read the diff.
 
-### Review and Update the PR Description
+### Re-examine the PR Description
 
-After pushing review-driven changes, the PR description may no longer reflect what the PR actually does. This is not optional cleanup - reviewers coming back for a second look will re-read the description, and it needs to be accurate.
-
-1. **Read the Confluence PR guide** using the Atlassian MCP tools. Fetch the "How to Write a Good Pull Request" page at `https://attentivemobile.atlassian.net/wiki/spaces/UI/pages/3172401183/How+to+Write+a+Good+Pull+Request` using `mcp__plugin_atlassian_atlassian__getConfluencePage`. This tells you the team's standards for what a good PR description looks like.
-2. **Read the current PR description**: `gh pr view --json body --jq '.body'`
-3. **Evaluate both accuracy and quality.** Accuracy alone is not enough. A description can be factually correct and still be poorly written. Ask two questions:
-
-   **Is it accurate?**
-   - Does the Summary reflect the final implementation, not a pre-review version?
-   - Are there claims that are no longer true after review-driven changes?
-   - Are new behaviors or approaches missing?
-   - Are quantitative claims (test counts, file counts) correct?
-
-   **Is it well-written?**
-   - Would a reviewer reading this understand what the PR does and why in under 30 seconds?
-   - Is the Summary concise prose that tells a clear story, or is it fragmented into sub-sections and bullet lists that a reviewer has to reassemble mentally? Default to prose. Use lists only when the PR genuinely has unrelated changes that don't form a narrative.
-   - Does it meet the standards from the Confluence guide?
-
-4. **If the description needs improvement, rewrite it.** Do not append a bullet point or add an "Additional changes" section. Re-evaluate the entire description and rewrite it so it reads as a coherent, well-written description of the PR's final state. Preserve the template structure (Jira Issue, Summary, Demo, Testing). Preserve any content you didn't create (user-written Demo sections, screenshots). Update everything else.
-
-```bash
-gh pr edit {number} --body "<updated body>"
-```
+1. Read `~/.work/rules/pr-descriptions.md` and `~/.work/rules/pr-body-editing.md`; they govern every word of the description. Read the Confluence guide "How to Write a Good Pull Request" at `https://attentivemobile.atlassian.net/wiki/spaces/UI/pages/3172401183/How+to+Write+a+Good+Pull+Request` with `mcp__plugin_atlassian_atlassian__getConfluenceContent` for what surrounds the description: draft status, PR size, self-review, screenshots, inline PR comments.
+2. Read the live body: `gh pr view {number} --json body --jq '.body'`.
+3. Examine the entire description. Every Summary sentence states a change the final diff contains. Nothing describes a pre-review version. Testing reflects the tests as they now stand. Sentences are at most 20 words, paragraphs at most 3 sentences, the Summary at most 5 paragraphs, all in plain English. A change in one section ripples into the others; trace each ripple and fix it in the same edit. A Demo note made stale by the change is named in the report to the user and left for him; Demo is his.
+4. Write the corrected body to a file in the session scratchpad and run `gh pr edit {number} --body-file <file>`. Never append a bullet or an "Additional changes" section. Never pass `--body` inline; the `pr-body-limits-block` hook denies it and denies a body over the limits. A denial means rewrite, never route around.
 
 ### Leave a Top-Level Comment
 
-After all thread replies are posted, leave a single top-level comment on the PR summarizing what was done:
+After all thread replies are posted, write the summary to a file in the session scratchpad, then leave a single top-level comment on the PR:
 
 ```bash
-gh pr comment {number} --body "<summary>"
+gh pr comment {number} --body-file <file>
 ```
 
 The summary should be brief and structured:
@@ -484,7 +457,7 @@ Move the linked Jira ticket to Code Review only when both approvals are present 
 2. **The user has approved in a comment.** Read the PR's comments and judge, in context, whether the user has signalled approval to move forward. This is your judgment, not a keyword match: "looks good, ship it" or a plain "approved" counts; a question, a nit, or no comment does not. The user authors this PR, so GitHub blocks a formal Approve review; the signal is always a plain comment.
 
 When and only when both hold:
-1. Fetch available transitions: `mcp__plugin_atlassian_atlassian__getTransitionsForJiraIssue`
+1. Find the transitions operation with `mcp__plugin_atlassian_atlassian__discover` (goal: list transitions for a Jira issue) and run it with `mcp__plugin_atlassian_atlassian__executeRead`
 2. Identify the Code Review transition (states like "Code Review", "In Review", "Ready for Review", "PR Submitted")
 3. Execute it: `mcp__plugin_atlassian_atlassian__transitionJiraIssue`
 
@@ -498,6 +471,7 @@ Inform the user that all work is complete:
 - How many review threads were responded to, broken down by strategy (implemented, discussed, deferred, etc.)
 - Any threads where you pushed back or deferred, so the user can follow up if needed
 - Which reviewers were re-requested for review
+- Any Demo note left stale for the user to fix
 - Whether the ticket moved to Code Review (both Codex and you approved), or that it stays in its current status pending one or both approvals
 - Any CI checks the user should monitor
 - Link to the PR
@@ -508,4 +482,3 @@ After all work is complete and reported:
 
 1. Send a shutdown request to each teammate: `SendMessage({to: "<name>", message: {type: "shutdown_request"}})`
 2. Wait for all teammates to acknowledge and shut down
-3. Clean up with TeamDelete

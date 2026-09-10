@@ -379,3 +379,8 @@ test('fails open on a null payload', () => {
   assert.equal(result.stdout, '');
   assert.equal(result.status, 0);
 });
+
+test('fails open on a payload over MAX_PAYLOAD_BYTES', () => {
+  // The command alone is 1,048,577 characters and would deny if analyzed.
+  assert.equal(decision(`node -e ${'x'.repeat(1048577)}`), 'allow');
+});

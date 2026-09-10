@@ -567,10 +567,21 @@ function analyze(cmd, depth = 0) {
   return null;
 }
 
+// MAX_PAYLOAD_BYTES: the lead's budget, set 2026-09-10 (well above GitHub's 65,536-byte body cap plus flags); a larger payload is not a tool call this hook can act on.
+const MAX_PAYLOAD_BYTES = 1048576;
+
 let raw = '';
+let overflow = false;
+let bytes = 0;
 process.stdin.setEncoding('utf8');
-process.stdin.on('data', d => { raw += d; });
+process.stdin.on('data', d => {
+  if (overflow) return;
+  bytes += Buffer.byteLength(d, 'utf8');
+  if (bytes > MAX_PAYLOAD_BYTES) { overflow = true; raw = ''; return; }
+  raw += d;
+});
 process.stdin.on('end', () => {
+  if (overflow) process.exit(0);
   let data;
   try { data = JSON.parse(raw); } catch { process.exit(0); }
   if (!data || data.tool_name !== 'Bash') process.exit(0);

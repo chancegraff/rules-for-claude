@@ -35,8 +35,8 @@ When any of the following fires, do NOT answer the agent's question, do NOT appr
 
 Systemic check, in order, before responding to the agent:
 
-1. Is the base stale? Dispatch a quick check: `git fetch origin main && git log HEAD..origin/main --oneline`. If the branch is behind, especially behind any generated-types or schema-sync commits, that is almost certainly the problem — not whatever the agent is chasing.
-2. Has codegen run since the last rebase? Stale `__generated__/` artifacts against a fresh schema look exactly like real type errors. If in doubt, dispatch `yarn relay:compile` (and any package-specific codegen) first, then retry.
+1. Is the base stale? Dispatch a quick check as two commands: first `git fetch origin main`, then `git log HEAD..origin/main --oneline`. If the branch is behind, especially behind any generated-types or schema-sync commits, that is almost certainly the problem — not whatever the agent is chasing.
+2. Has codegen run since the last rebase? Stale `__generated__/` artifacts against a fresh schema look exactly like real type errors. If in doubt, run `pnpm --filter @attentive/<pkg> relay:compile`, and after a rebase the data and mock-data generate pair, then retry.
 3. Re-read the plan against what the agent reported. Is the plan wrong, not the agent? Plans written before Wave 1 cannot anticipate what Wave 1 reveals.
 4. Check the CLAUDE.md files in the directories the agent is working in. Is there a rule the brief missed that would have prevented this?
 5. Check `git log -- <problem_file>` for recent changes. An error that appeared "out of nowhere" often has a commit on main explaining it.
@@ -74,7 +74,7 @@ Apply this contextually:
 
 ## No Inline Scripts
 
-Never write or execute inline scripts (Python, Node, shell scripts, etc.) to accomplish tasks. Use dedicated tools (Read, Grep, Glob, Edit, Bash for CLI commands) and the `gh` CLI directly. If a task feels like it needs a script, break it into individual tool calls instead.
+Never write or execute inline scripts (Python, Node, shell scripts, etc.) to accomplish tasks. Use dedicated tools (Read, LSP, Glob, ls and find, Edit, Bash for CLI commands) and the `gh` CLI directly. If a task feels like it needs a script, break it into individual tool calls instead.
 
 ## Prerequisites
 
@@ -109,7 +109,7 @@ Scan the ticket description, comments, and linked issues for external resources 
 
 - **PRDs, tech specs, RFCs**: Tickets often link to foundational documents. These can live in either place:
   - **Google Workspace** (Docs, Sheets, Slides): Use the `gws` CLI to read them. Run `gws --help` if unfamiliar with the tool.
-  - **Confluence**: Fetch using `mcp__plugin_atlassian_atlassian__getConfluencePage`.
+  - **Confluence**: Fetch using `mcp__plugin_atlassian_atlassian__getConfluenceContent`.
 - **Figma URLs** (figma.com/design/..., figma.com/board/...): Use the Figma MCP tools (invoke the `figma-use` skill first, then `get_design_context` or `get_screenshot`) to fetch design context, component specs, and visual references.
 - **Jira attachments**: Download and read any attached files (images, PDFs, spreadsheets) from the ticket. Images provide visual specs; documents provide additional requirements context.
 
@@ -164,7 +164,7 @@ Use EnterPlanMode. Everything in this phase happens in plan mode.
 
 Before writing any plan, understand the territory:
 
-1. **Explore relevant areas** using the Explore agent or Grep/Glob tools. Identify the files, components, hooks, queries, and tests that relate to the ticket.
+1. **Explore relevant areas** inline with LSP (workspaceSymbol, findReferences, goToDefinition), Read, and ls/find/Glob; never dispatch exploration agents. Identify the files, components, hooks, queries, and tests that relate to the ticket.
 2. **Read existing patterns** in files you will modify or files similar to what you will create. Follow what already exists rather than inventing new patterns.
 3. **Check for nested CLAUDE.md files** in the directories you will work in. These contain domain-specific guidance (build commands, architecture rules, testing patterns) that your agents must follow.
 4. **Read relevant style guide sections** from `docs/style-guide/`. Load only the files that apply to this ticket's work.
@@ -256,14 +256,14 @@ Which agent reviews which other agent's work. Rules:
 
 - Every agent's work must be reviewed by at least one other agent
 - Prefer cross-domain reviews (test engineer reviews components, frontend dev reviews tests)
-- If there is only one agent, the Team Leader reviews their work directly using the `superpowers:code-reviewer` agent type
+- If there is only one agent, the Team Leader reviews their work directly
 
 **5. Verification Steps**
-Commands to run after all implementation is complete. These commands must always be run from the package directory you made changes in (e.g., `libs/crm`, `mfes/analytics-ui`), never from the repo root. The verification sequence is:
+Commands to run after all implementation is complete. The repo uses pnpm. Run every command from the repo root through `--filter @attentive/<pkg>` (for example `@attentive/crm`, `@attentive/analytics-ui`), one command per Bash call, never with `cd`; a root-level `test`, `lint`, or `check-types` across all packages is banned. Scope `test`, `lint`, and `format:check` to the changed files as step 3 shows; `check-types` runs package-level and is the exception. Run test commands one at a time.
 
-1. **Generate first**: Run `yarn relay:compile` in the package directory (and any other generation commands specified in the package's CLAUDE.md or README) before anything else. Type checking and tests will fail without generated types/schemas.
-2. **Auto-fix**: Run `yarn format:write` and `yarn lint --fix` to auto-fix formatting and lint issues before checking.
-3. **Verify**: Run `yarn format:check`, `yarn lint`, `yarn check-types`, `yarn test`.
+1. **Generate first**: `pnpm --filter @attentive/<pkg> relay:compile`. After an install, a rebase, or any flag-fragment edit, also run `pnpm --filter @attentive/data generate` and then `pnpm --filter @attentive/mock-data generate` (several minutes each). Type checking and tests fail without generated types.
+2. **Auto-fix**: `pnpm --filter @attentive/<pkg> lint --fix <changed files>`. `format:write` ignores path arguments and reformats the whole package; run `pnpm --filter @attentive/<pkg> format:write` once, when no teammate is mid-edit.
+3. **Verify, scoped to the changed files**: `pnpm --filter @attentive/<pkg> format:check <changed files>`, `pnpm --filter @attentive/<pkg> lint <changed files>`, `pnpm --filter @attentive/<pkg> test <changed test files>`, then `pnpm --filter @attentive/<pkg> check-types` with no file arguments (tsc ignores tsconfig when given files). `format:check` and `lint` also scan the whole package and can report files outside the passed paths; read the file list.
 
 **6. Completion Criteria**
 What "done" looks like: all tasks complete, all reviews approved, all verification commands pass, PR created. The ticket stays in its current status; it moves to Code Review later, via `pr-review-response`, once both Codex and the user approve. For bug tickets, additionally: Wave A's reproducer is committed and passing on the final branch.
@@ -287,19 +287,18 @@ When the user approves the plan, begin implementation.
 
 Before the first dispatch, re-read "Leading, Not Dispatching." Phase 3 is where those principles earn their keep — if you skip them, this phase is where the session goes off the rails.
 
-### Create the Team
+### The Team
 
-Use TeamCreate to create a team for this ticket (e.g., team name `ticket-USP-2313`). This creates a shared task list that all teammates can access.
+The session has one implicit team, formed on the first teammate spawn; there is no create step. Teammates are addressed by `name` through SendMessage and share one task list.
 
 ### Spawn Teammates
 
-For each role in the team roster, spawn a teammate using the Agent tool with the `team_name` parameter:
+For each role in the team roster, spawn a teammate using the Agent tool with `name` set:
 
 - Use a descriptive `name` matching the team roster (e.g., `frontend-dev`, `test-engineer`)
 - Include the full task context: what to build, which files, acceptance criteria, relevant patterns from codebase analysis
 - Point the teammate to any relevant CLAUDE.md files and style guide sections
 - Remind the teammate of coding standards: no `any`, no type casting, hooks in their own files, no prop drilling
-- Set `mode: "auto"` for implementation teammates
 - Launch all teammates in the current wave in parallel (single message with multiple Agent tool calls)
 
 Teammates persist throughout the workflow. They go idle between tasks but retain full context when you send them follow-up work via SendMessage. This is critical for the review cycle, where implementation teammates already understand the code they wrote.
@@ -308,11 +307,11 @@ Teammates persist throughout the workflow. They go idle between tasks but retain
 
 1. **Delegate current wave — dispatch in parallel, always.** Use TaskCreate to create tasks in the team's task list, then assign them to teammates with TaskUpdate (set `owner` to the teammate's name). For wave 1, teammates were already briefed during spawning, so the parallel dispatch happened at spawn time. For subsequent waves, send every teammate's next task as SendMessage calls in a **single turn** with multiple tool calls — do not wait for one teammate to acknowledge before messaging the next. A wave is defined by tasks that can start at the same time; dispatching them sequentially throws that property away. The only reason to dispatch serially within a wave is if you have already discovered a dependency that should have made the second task part of a later wave — in which case revise the plan, do not paper over it with ordering.
 
-2. **Verify wave completion**: When all teammates in the current wave report back, verify their outputs meet the task acceptance criteria. If a teammate's work is incomplete or incorrect, use SendMessage to give them specific feedback about what needs to change. Also re-check the plan itself — a wave's outputs can reveal that the plan's next wave needs to change. If so, revise the plan before dispatching Wave N+1 and surface the revision to the user.
+2. **Verify wave completion**: When all teammates in the current wave report back, verify their outputs meet the task acceptance criteria. If a teammate's work is incomplete or incorrect, use SendMessage to give them specific feedback about what needs to change. After two re-delegations still incomplete, stop and surface it to the user. Also re-check the plan itself — a wave's outputs can reveal that the plan's next wave needs to change. If so, revise the plan before dispatching Wave N+1 and surface the revision to the user.
 
 3. **Advance**: When the current wave is fully verified, move to the next wave. Repeat until all waves are complete.
 
-4. **Run verification**: After all implementation waves are done, `cd` into the package directory where changes were made and run verification. Follow the exact sequence from the plan's Verification Steps section: generate types first, auto-fix formatting/lint, then run the checks. Read the package's CLAUDE.md for any package-specific generation or build commands. If verification surfaces issues that touch independent files or belong to different teammates' domains, fan the fixes out in parallel — SendMessage to each affected teammate in a single turn with multiple tool calls, rather than waiting for one fix to land before messaging the next. Only serialize when one fix's output is genuinely an input to another.
+4. **Run verification**: After all implementation waves are done, run the verification sequence from the plan, package-scoped through `--filter` from the repo root. Follow the exact sequence from the plan's Verification Steps section: generate types first, auto-fix formatting/lint, then run the checks. Read the package's CLAUDE.md for any package-specific generation or build commands. If verification surfaces issues that touch independent files or belong to different teammates' domains, fan the fixes out in parallel — SendMessage to each affected teammate in a single turn with multiple tool calls, rather than waiting for one fix to land before messaging the next. Only serialize when one fix's output is genuinely an input to another. After two fix rounds still failing, stop and surface it to the user.
 
 5. **Transition to review**: When all verification passes, move to Phase 4.
 
@@ -323,7 +322,7 @@ Teammates persist throughout the workflow. They go idle between tasks but retain
 2. **Verify Wave A — this is a real gate, not a formality.** When the teammate reports back, the team leader does the following before touching Wave B:
    - Read the committed reproducer. Run it. Confirm it fails on the current branch for the reason the teammate claims.
    - Read the teammate's localization report. Follow the code path they described. Confirm the file/function/input they named is actually where the bad value originates, not a symptom downstream of it.
-   - If the reproducer does not actually fail, or the localization does not hold up, SendMessage the teammate with specifics and iterate. Do not proceed until both hold.
+   - If the reproducer does not fail, or the localization does not hold up, SendMessage the teammate with specifics and iterate. Do not proceed until both hold. After two rounds without both holding, take the exit ramp in step 3.
 
 3. **Exit ramp: "I don't know."** If Wave A reports blocked — either "I cannot make it fail" or "I localized something but cannot explain it with near-certainty from the code" — do not plan a fix. Surface the teammate's trace, ruled-out hypotheses, and evidence needs to the user. Ask how to proceed. Acceptable paths: gather more context (logs, repro steps, a different input) and re-dispatch Wave A; narrow the ticket's scope; or close without a fix. Unacceptable paths: guessing a root cause, shipping a defensive check that hides the symptom.
 
@@ -331,9 +330,9 @@ Teammates persist throughout the workflow. They go idle between tasks but retain
 
 5. **Dispatch Wave B.** SendMessage the assigned teammates with the Wave B task(s). If the same teammate who wrote the reproducer is also the right fit for the fix (common for small bugs), SendMessage them the fix task directly. If Wave B has multiple independent tasks (e.g., the fix itself plus an adjacent test update that no longer matches the corrected behavior), send all of those SendMessage calls in a single turn with multiple tool calls — do not serialize dispatch when the tasks can start at the same time.
 
-6. **Verify Wave B — red → green is the only acceptable signal.** When Wave B reports back, the team leader runs Wave A's reproducer. It must now pass. "The code looks right" and "should work now" are not verification. If the reproducer does not flip, SendMessage the teammate with specifics and iterate.
+6. **Verify Wave B — red → green is the only acceptable signal.** When Wave B reports back, the team leader runs Wave A's reproducer. It must now pass. "The code looks right" and "should work now" are not verification. If the reproducer does not flip, SendMessage the teammate with specifics and iterate. After two rounds without a flip, stop and surface it to the user.
 
-7. **Run verification.** Once Wave A's reproducer passes, `cd` into the package directory and run the full verification sequence (generate, auto-fix, check). Delegate any failures back to the appropriate teammate via SendMessage.
+7. **Run verification.** Once Wave A's reproducer passes, run the verification sequence from the plan, package-scoped through `--filter` from the repo root (generate, auto-fix, check). Delegate any failures back to the appropriate teammate via SendMessage. After two fix rounds still failing, stop and surface it to the user.
 
 8. **Transition to review.** When all verification passes, move to Phase 4. The reproducer is committed and stays in the PR — it is part of the fix, not scaffolding.
 
@@ -341,49 +340,38 @@ Teammates persist throughout the workflow. They go idle between tasks but retain
 
 ## Phase 4: Code Review
 
-Code review happens in two layers. The first catches implementation issues between peers. The second is a holistic quality gate that evaluates all changes together.
+Code review happens in two layers. The first catches implementation issues between peers. The second is the Team Leader's holistic pass over all changes together.
 
-Implementation teammates are still active and idle, retaining full context from their work. Reviewer teammates are spawned fresh for independence, but the fix cycle uses SendMessage to the original implementation teammates, who already understand the code they wrote.
+Implementation teammates are still active and idle, retaining full context from their work. No reviewer agents are spawned: the implementers review each other, and the Team Leader reads everything last.
 
-### Layer 1: Cross-Agent Peer Review
+### Layer 1: Cross-Review by Implementers
 
-For each review assignment in the plan, spawn a reviewer teammate using the Agent tool with `team_name` and `subagent_type: "superpowers:code-reviewer"`. Give each reviewer a descriptive name (e.g., `reviewer-for-frontend-dev`).
+For each review assignment in the plan, SendMessage the reviewing implementer a brief that includes:
 
-Each reviewer's prompt must include:
+- **Files to review**: exact paths the reviewed teammate modified, excluding `__generated__/` directories (auto-generated by Relay/codegen, not human-authored).
+- **Read actual source files**: open and read each file in full. Diffs miss surrounding context and lead to shallow reviews.
+- **Task context**: the reviewed task's description, acceptance criteria, and planned approach.
+- **Team context**: what the other teammates built and how it integrates with the files under review (for example, "the tests in X.jest.tsx import from this component, verify the exports match").
+- **Standards**: coding standards, style guide sections, and applicable CLAUDE.md rules.
+- **Review format**: specific, actionable feedback with file paths and line numbers; explicit approval if everything looks good.
 
-- **Files to review**: List exact file paths the reviewed teammate modified. Exclude any `__generated__/` directories (auto-generated by Relay/codegen, not human-authored).
-- **Read actual source files**: The reviewer must open and read each file in full. Do not read git diffs as a substitute. Diffs miss surrounding context and lead to shallow, incomplete reviews.
-- **Task context**: The original task description, acceptance criteria, and the approach that was planned. This tells the reviewer what the code is supposed to do.
-- **Team context**: A brief summary of what other teammates built and how their work integrates with the files under review. This lets the reviewer check integration points (e.g., "the test engineer wrote tests in X.jest.tsx that import from this component, verify the exports match").
-- **Standards**: The coding standards, style guide sections, and any CLAUDE.md rules that apply to the files under review.
-- **Review format**: The reviewer should provide specific, actionable feedback with file paths and line numbers. If everything looks good, the reviewer should explicitly state approval.
+Send all review briefs in one turn. When a review comes back:
 
-Launch all initial reviews in parallel.
+- **If approved**: mark that review complete.
+- **If changes requested**: SendMessage the feedback (exact comments, paths, line numbers) to the owning teammate, who has full context from their work. After fixes, SendMessage the same reviewer to re-review with the previous comments attached. Repeat until the reviewer explicitly approves. A finding still open after two fix rounds is a thrashing trigger: stop, diagnose, and surface it to the user.
 
-When a reviewer completes their review:
+All peer reviews must pass before Layer 2. With one implementer there are no Layer 1 assignments; Layer 2 is the review.
 
-- **If approved**: Mark that review as complete. No further action needed.
-- **If changes requested**:
-  1. Use SendMessage to forward the reviewer's feedback (exact comments, file paths, line numbers) to the original implementation teammate. They already have full context from their work, so they can address the feedback efficiently.
-  2. After the implementation teammate applies fixes, use SendMessage to the reviewer teammate asking them to re-review the updated files. Include the previous review's comments so the reviewer can verify each item was addressed.
-  3. Repeat until the reviewer explicitly approves.
+### Layer 2: Team Leader's Holistic Review
 
-All peer reviews must pass before advancing to Layer 2.
+After peer reviews pass, the Team Leader reads every changed file in full, across all teammates and review fix-ups, and checks:
 
-### Layer 2: Final QA Review
+- **Integration**: do the pieces fit together? Are imports consistent? Do hooks, components, and queries connect? Are there gaps between what one teammate produced and what another consumes?
+- **Pattern compliance**: does the code follow existing codebase patterns? Are there new patterns that do not match what is already there?
+- **Edge cases**: error states, empty states, loading states, boundary conditions, accessibility.
+- **Test coverage**: do tests cover the important logic? Are there obvious gaps?
 
-After peer reviews pass, run a final quality gate. This is a senior engineer's holistic review of ALL changes together, not individual teammate slices.
-
-Spawn a single QA reviewer teammate using the Agent tool with `team_name` and `subagent_type: "superpowers:code-reviewer"`, with a comprehensive prompt covering:
-
-- **All changed files**: Every file modified across all teammates and review fix-ups. The reviewer reads each in full.
-- **Full task context**: The goal, planned approach, and each teammate's responsibilities.
-- **Integration focus**: Do the pieces fit together? Are imports consistent? Do hooks, components, and queries connect properly? Are there gaps between what one teammate produced and what another consumes?
-- **Pattern compliance**: Does the code follow existing codebase patterns? Are there new patterns that don't match what's already there?
-- **Edge cases**: Error states, empty states, loading states, boundary conditions, accessibility.
-- **Test coverage**: Do tests cover the important logic? Are there obvious gaps?
-
-The QA reviewer's feedback is treated the same way as peer review: if changes requested, use SendMessage to delegate fixes to the appropriate implementation teammate, then SendMessage to the QA reviewer to re-review. Repeat until approved. Do not move to Phase 5 with any outstanding change requests from either layer.
+Findings go to the owning teammate via SendMessage; the Team Leader re-reads after fixes. The same two-round bound applies. Do not move to Phase 5 with any outstanding finding from either layer.
 
 ---
 
@@ -398,7 +386,7 @@ The QA reviewer's feedback is treated the same way as peer review: if changes re
    ```
    <TICKET>: <description>
 
-   Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>
+   <the Co-Authored-By attribution line for the current model, as given in the session's system reminder>
    ```
    Use the ticket number as prefix (e.g., `USP-2313: Add offer link in offers module`)
 5. Push to the current branch: `git push -u origin HEAD`
@@ -406,19 +394,18 @@ The QA reviewer's feedback is treated the same way as peer review: if changes re
 ### Prepare the PR
 
 1. **Read the PR template** at `.github/pull_request_template.md`
-2. **Read the Confluence guide** for PR standards using the Atlassian MCP tools:
-   - "How to Write a Good Pull Request": `https://attentivemobile.atlassian.net/wiki/spaces/UI/pages/3172401183/How+to+Write+a+Good+Pull+Request`
-   Use `mcp__plugin_atlassian_atlassian__getConfluencePage` to fetch the page's content.
+2. **Read the rules and the guide.** `~/.work/rules/pr-descriptions.md` governs the description text. The Confluence guide "How to Write a Good Pull Request" at `https://attentivemobile.atlassian.net/wiki/spaces/UI/pages/3172401183/How+to+Write+a+Good+Pull+Request`, read with `mcp__plugin_atlassian_atlassian__getConfluenceContent`, governs what surrounds it: draft status, PR size, self-review, screenshots, inline PR comments.
 3. **Fill in the PR template**:
    - **Jira Issue**: `https://attentivemobile.atlassian.net/browse/<TICKET>`
-   - **Summary**: Clear description of what changed and why, following the Confluence guide's standards. Do not use em dashes or en dashes in prose.
+   - **Summary**: What the PR does, under `~/.work/rules/pr-descriptions.md`: at most 5 paragraphs, each at most 3 sentences, each sentence at most 20 words, plain English.
    - **Demo**: Leave this section for the user to fill out. You cannot start a dev server, run a browser, or take screenshots, so do not write placeholder text. Instead write: `<!-- TODO: Add screenshots/video or note that visual demo isn't necessary -->`
-   - **Testing**: Describe unit tests added, manual testing performed, and regression considerations
+   - **Testing**: Unit tests added, manual testing performed, and regression considerations, under the same sentence and paragraph limits
+4. **Write the filled template to a file** in the session scratchpad directory. The `pr-body-limits-block` hook denies an inline `--body` and denies a body over the limits; a denial means rewrite.
 
 ### Create the PR
 
 ```bash
-gh pr create --title "<TICKET>: <concise description>" --body "<filled template>" --base main --label "opened-by-ai" --label "ci:skip-acceptance-tests"
+gh pr create --title "<TICKET>: <concise description>" --body-file <file> --base main --label "opened-by-ai" --label "ci:skip-acceptance-tests"
 ```
 
 ### Trigger Automated Code Review
@@ -452,4 +439,3 @@ After all work is complete and reported:
 
 1. Send a shutdown request to each teammate: `SendMessage({to: "<name>", message: {type: "shutdown_request"}})`
 2. Wait for all teammates to acknowledge and shut down
-3. Clean up with TeamDelete
