@@ -1,0 +1,18 @@
+{
+  "ticket": "ITE-4492",
+  "template_file": "Template—2026 NEW Attentive Company Deck Template.pptx",
+  "source_sha256": "2c12faf2fc6c703a33e696832cc5f2e0a4c8d4d8dfc248973299511b0d5bfecc",
+  "source_size_bytes": 70219827,
+  "packaged_sha256": "f37cf5bc8f5d874d3a55d3991f0a7329a688c4bc565e66a73970e31262c88f1a",
+  "packaged_size_bytes": 23951737,
+  "slide_count": 164,
+  "validated_on": "2026-09-01",
+  "release_note": "The packaged template preserves all 164 source slides and layouts. Seven fully opaque raster assets were resized conservatively and re-encoded as high-quality JPEGs so the complete OpenAI Skill stays below the 25 MB upload limit; transparent assets were left unchanged.",
+  "render_validation": {
+    "rendered_slides": 164,
+    "pixel_identical_slides": 153,
+    "intentionally_changed_slides": [35, 37, 39, 41, 42, 54, 55, 56, 57, 58, 152],
+    "minimum_global_ssim": 0.99815588,
+    "maximum_mean_absolute_error": 1.75312
+  }
+}

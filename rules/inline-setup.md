@@ -1,3 +1,16 @@
 # Do Setup and Verification Inline
 
-Do local machine setup and verification tasks (LSP servers, MCP config, missing binaries) directly in-session: diagnose, install, and re-test yourself. Never spawn nested headless `claude -p` runs for verification. MCP servers added to config mid-session expose no tools until the next session start (toolsets snapshot at startup; ToolSearch won't find them); verify what is reachable now, and state plainly what needs a restart.
+This rule covers machine tools only: LSP servers, MCP config, missing binaries. A repository's own dependencies are installed by the agent that works the worktree, per [teammate-worktrees](teammate-worktrees.md).
+
+Machine setup is diagnosed, installed and re-tested in session, as the incidental need outside any work stream that [delegation](delegation.md) leaves with the lead. Never spawn nested headless `claude -p` runs for verification.
+
+**What a session restart gates:**
+- A hook change in `settings.json` needs no restart. The next matching tool call runs the new command.
+- An MCP server and every tool it serves need one. A session's tool set is a snapshot taken at start: a server added mid-session serves no tools until the next start and ToolSearch will not find them, and a server already running keeps the build it started with, so a rebuilt tool still serves its old build. An agent spawned in the session reaches only the servers that session has. `/reload-plugins` restarts no user-scope server, and a killed user-scope server is not reconnected; a session start or `/login` loads them.
+- Permission rules (`permissions.allow` and deny) are the user's to edit, never the lead's.
+
+**Two more harness facts about the tools this rule covers:**
+- A Supabase `apply_migration` is keyed by the second, so two of them never go out at the same moment; DDL is sent one call at a time.
+- One agent's window cannot carry a whole corpus. A bulk send is a Workflow script of fresh seats, its statements joined into calls of at most 60,000 characters.
+
+When a step is put off "until the next session start", name which of these it waits on: a hook edit never waits, a rebuilt or newly added MCP tool always does. Verify what is reachable now and say plainly what needs a restart.

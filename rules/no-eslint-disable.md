@@ -1,3 +1,5 @@
 # No eslint-disable
 
-eslint-disable comments are BANNED: never write `// eslint-disable`, `// eslint-disable-next-line`, `/* eslint-disable */`, or any rule-suppression comment. Suppressing lint hides real signal. If a lint rule fires, fix the root cause so the rule passes honestly. Example: instead of suppressing `react/no-array-index-key`, use a genuinely unique non-index key the data already provides (`key={entry.label}` when labels are unique within the list; object keys or "item N" labels are). Sits with the other hard bans: [no ternaries](no-ternaries.md), no `any`/`unknown`/casts (global standards).
+eslint-disable comments are BANNED: never write `// eslint-disable`, `// eslint-disable-next-line`, `/* eslint-disable */`, or any other rule-suppression comment. Suppressing lint hides real signal. When a rule fires, fix the cause so the rule passes honestly: for a key warning on a list, use a value the data already makes unique (`key={entry.label}` where labels are unique in that list) instead of the array index.
+
+Sits with the other hard bans: [no ternaries](no-ternaries.md), no `any`/`unknown`/casts (global standards).

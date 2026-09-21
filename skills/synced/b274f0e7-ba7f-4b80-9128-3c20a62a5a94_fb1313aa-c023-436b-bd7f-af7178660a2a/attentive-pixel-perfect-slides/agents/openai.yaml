@@ -1,0 +1,4 @@
+interface:
+  display_name: "Attentive Pixel-Perfect Slides"
+  short_description: "Create and QA Attentive decks from the 2026 template"
+  default_prompt: "Use $attentive-pixel-perfect-slides to create or revise an Attentive presentation from the canonical 2026 template."

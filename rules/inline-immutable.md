@@ -1,4 +1,7 @@
 # Inline, Immutable, Single-Pass Code
 
-- Do NOT write helper functions; inline the logic, mirroring the existing component's structure. Before editing, write the transform as a single immutable pass with no new named helpers: a single `reduce` returning `[...acc, x]` over mutation loops (`for...of` + `push`, rejected as mutation) or `.map().filter()` (rejected as two passes). `flatMap` works too but reads as fragile when each element is itself an array; `reduce` makes the per-item append obvious. Keep the data flow obvious for multi-element cases. The user reviews each edit closely and rejects mutation, multi-pass iteration, and extracted abstractions even when functionally correct; cleanliness and matching existing idiom matter as much as correctness.
-- The same rules govern responses to review nits: find the minimal edit that eliminates the concern class entirely; never reorganize a file to honor a reviewer's literal phrasing. Example: for a magic id offset in mock data, the right fix is one line giving the fillers their own id namespace (`Profile-Filler-${index + 1}`), killing the collision class with no restructuring, not extracting the hardcoded edges into a named const and recomposing from spreads.
+Write a one-off transform inline, inside the function that needs it, as a single immutable pass: one `reduce` returning `[...acc, x]`, never a `for...of` with `push` (mutation), never `.map().filter()` (two passes).
+
+A new helper function exists only when the reference already has one, or when a second caller needs it; inside one transform, inline it. [mirror-not-extract](mirror-not-extract.md) carries the same sentence.
+
+Answering a review nit follows the same rule: make the smallest edit that removes the whole concern, never a reorganization of the file to match a reviewer's wording.

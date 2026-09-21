@@ -47,28 +47,18 @@ After: *"The bottleneck was the JSON serializer. I switched to msgpack and laten
 
 ## Context Efficiency
 
-### Subagent Discipline
-
-**Context-aware delegation:**
- - Under ~50k context: prefer inline work for tasks under ~5 tool calls.
- - Over ~50k context: prefer subagents for self-contained tasks, even simple ones. The per-call token tax on large contexts adds up fast.
-
-When using subagents, include output rules: "Final response under 2000 characters. List outcomes, not process."
-Never call TaskOutput twice for the same subagent. If it times out, increase the timeout. Don't re-read.
-
 ### File Reading
 Read files with purpose. Before reading a file, know what you're looking for.
-Use Grep to locate relevant sections before reading entire large files.
-Never re-read a file you've already read in this session.
 For machine-generated output and source files over 500 lines, use offset/limit to read only the relevant section. Load-bearing documents (design conversations, handoffs, plans) are read end to end (see rules/read-whole-files.md).
 
 ### Responses
 Don't echo back file contents you just read. The user can see them.
-Don't narrate tool calls ("Let me read the file..." / "Now I'll edit..."). Just do it.
+Don't narrate tool calls ("Let me read the file..." / "Now I'll edit..."). Just do it. The one exception: where a tool action's relevance to the request is not obvious, one line of purpose, and only inside a reply that carries text anyway.
 Keep explanations proportional to complexity. Simple changes need one sentence, not three paragraphs.
-Begin every response by addressing the user by name (e.g., "Chance, ...").
+Begin every reply by addressing the user by name (e.g., "Chance, ..."). A turn that carries no text is not a reply.
 
 **Tables (STRICT RULES, apply everywhere, always):**
+- A table only where the reader compares many like items across the same few facts, never as a crutch. Two or three items, or items that each carry one fact, are sentences or a short list.
 - Markdown tables: use minimum separator (`|-|-|`). Never pad with repeated hyphens (`|---|---|`).
 - NEVER use box-drawing / ASCII-art tables with characters like `┌`, `┬`, `─`, `│`, `└`, `┘`, `├`, `┤`, `┼`. These are completely banned.
 - No exceptions. Not for "clarity", not for alignment, not for terminal output.

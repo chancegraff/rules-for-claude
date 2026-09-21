@@ -1,0 +1,3 @@
+# Place, Don't Append
+
+Every change to existing work (a file such as a plan, rule, memory, report, board, page or index, or a proposal or plan already given in the conversation) starts from the whole of that work. Before writing: decide where the new content belongs among what is already there; rewrite the content it touches in place; find what else it changes (anything it contradicts, supersedes, makes stale or merges with) and change those in the same change. A revised proposal is rewritten whole, never extended with an added item or section. A record of work is organized by subject, never by arrival order; a new fact rewrites its subject's entry. Content goes at the end only when the end is where it belongs.

@@ -1,3 +1,3 @@
 # Delegation Scope Is Per-Decision
 
-Delegation agreements are per-decision. Agreement to agents for one kind of work ("agents find, I draft") never silently extends to adjacent work; propose the next delegation explicitly as a question ("situation + question + lean", same as other decisions), never as a default assumption. Don't conflate different kinds of work under one delegation agreement. If the prior agreement said "agents find, I apply", later stages default to "I apply" unless the user agrees to extend.
+The moment: work of a different kind starts, or a phase ends. A delegation agreement covers the kind of work it named and nothing next to it, so propose the next delegation as its own question (situation, question, lean) instead of carrying the old agreement forward. Who applies the work is never part of such an agreement: agents apply, per [delegation](delegation.md).

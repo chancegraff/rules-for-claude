@@ -1,0 +1,54 @@
+{
+  "colors": {
+    "poppyseed": "#1E1C1C",
+    "ginger": "#F6DA71",
+    "pistachio": "#D6DF22",
+    "yuzu": "#FFD60B",
+    "meringue": "#FCFAEE",
+    "latte": "#FAF4DF",
+    "oyster": "#E5E5DD",
+    "matcha": "#6E8A09",
+    "dijon": "#D29C00",
+    "garlic": "#F4F2E6",
+    "salt": "#F0EFEA",
+    "sardine": "#E9E9EB",
+    "truffle": "#757575",
+    "nori": "#303D00",
+    "taffy": "#A3C3F1",
+    "blueCorn": "#6079DC",
+    "juniper": "#2D36B0",
+    "papaya": "#F0B368",
+    "lox": "#DF6A30",
+    "jam": "#720C07"
+  },
+  "usage": {
+    "defaultText": "poppyseed",
+    "defaultBackground": "meringue",
+    "primaryAction": "yuzu",
+    "quietBackground": "latte",
+    "logoColorsOnly": ["poppyseed", "yuzu", "meringue"]
+  },
+  "fonts": {
+    "brandSerif": "Academica Book",
+    "brandSerifItalic": "Academica Italic",
+    "brandSans": "ABC Diatype",
+    "fallbackSerif": "Libre Baskerville",
+    "fallbackSans": "Inter"
+  },
+  "typeScale": {
+    "hxl": { "pt": 74, "lineHeight": 0.9 },
+    "hl": { "pt": 56, "lineHeight": 0.9 },
+    "hm": { "pt": 42, "lineHeight": 0.9 },
+    "hs": { "pt": 31, "lineHeight": 1.1 },
+    "hxs": { "pt": 24, "lineHeight": 1.2 },
+    "p1": { "pt": 17, "lineHeight": 1.2 },
+    "p2": { "pt": 13, "lineHeight": 1.3 }
+  },
+  "layout": {
+    "productSnippetRadiusPt": 14,
+    "productSnippetMarginPt": 24,
+    "metadataPaddingPt": 10,
+    "metadataRadiusPx": 7.7,
+    "socialAvatarLogoMarginPercent": 15
+  }
+}

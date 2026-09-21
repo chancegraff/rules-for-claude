@@ -2,6 +2,7 @@
 'use strict';
 
 // git-no-verify-block.js — PreToolUse hook (matcher: Bash)
+// Blocks three things on `git commit` and `git push`: a hook bypass, an amend, and a force-push.
 // Blocks all known forms of pre-commit/pre-push hook bypass when the
 // command is `git commit` or `git push`. Mirrors the zsh guard in
 // ~/.zshenv but tightens it to also catch:
@@ -56,12 +57,18 @@ process.stdin.on('end', () => {
   if (/\bGIT_CONFIG_PARAMETERS\b/.test(cmd)) {
     reasons.push('GIT_CONFIG_PARAMETERS env override');
   }
+  if (subcmd === 'commit' && /(?:^|\s)--amend(?=\s|$)/.test(cmd)) {
+    reasons.push('--amend (fixes are new commits on top)');
+  }
+  if (subcmd === 'push' && /(?:^|\s)(?:--force|--force-with-lease(?:=\S+)?|-f|\+\S+)(?=\s|$)/.test(cmd)) {
+    reasons.push('--force (a force-push is stated for Chance to run)');
+  }
 
   if (reasons.length === 0) process.exit(0);
 
   process.stderr.write(
-    'ERROR: --no-verify is forbidden. Fix the underlying issue instead of bypassing hooks.\n' +
-    `Detected bypass: ${reasons.join(', ')}\n`
+    'ERROR: this git call is blocked. Fix the underlying issue instead of bypassing it.\n' +
+    `Blocked: ${reasons.join(', ')}\n`
   );
   process.exit(2);
 });

@@ -1,0 +1,1031 @@
+{
+ "meta": {
+  "rubric": {
+   "scale": "1-5",
+   "data_viz": "1 none \u00b7 2 incidental stat pill \u00b7 3 dedicated stat/KPI display \u00b7 4 one chart/table/timeline \u00b7 5 rich/dense chart, matrix, or dashboard",
+   "text_density": "word-count bands: 1<=15 \u00b7 2<=40 \u00b7 3<=90 \u00b7 4<=150 \u00b7 5>150 (tables/matrix bumped to >=4)",
+   "high_impact": "visual/rhetorical punch: 1 utilitarian/reference \u00b7 3 clear focal element \u00b7 5 full-bleed statement/quote/cover/hero"
+  },
+  "n_working_slides": 142,
+  "excluded_non_working": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   20,
+   23,
+   29,
+   48,
+   59,
+   90,
+   117,
+   121,
+   125,
+   130
+  ]
+ },
+ "scores": {
+  "13": {
+   "category": "title_opener",
+   "data_viz": 1,
+   "text_density": 1,
+   "high_impact": 5,
+   "words": 4
+  },
+  "14": {
+   "category": "title_opener",
+   "data_viz": 1,
+   "text_density": 1,
+   "high_impact": 5,
+   "words": 4
+  },
+  "15": {
+   "category": "title_opener",
+   "data_viz": 1,
+   "text_density": 1,
+   "high_impact": 4,
+   "words": 4
+  },
+  "16": {
+   "category": "title_opener",
+   "data_viz": 1,
+   "text_density": 1,
+   "high_impact": 5,
+   "words": 12
+  },
+  "17": {
+   "category": "title_opener",
+   "data_viz": 1,
+   "text_density": 1,
+   "high_impact": 4,
+   "words": 12
+  },
+  "18": {
+   "category": "title_opener",
+   "data_viz": 1,
+   "text_density": 2,
+   "high_impact": 5,
+   "words": 21
+  },
+  "19": {
+   "category": "title_opener",
+   "data_viz": 1,
+   "text_density": 2,
+   "high_impact": 4,
+   "words": 21
+  },
+  "21": {
+   "category": "title_opener",
+   "data_viz": 1,
+   "text_density": 2,
+   "high_impact": 4,
+   "words": 35
+  },
+  "22": {
+   "category": "title_opener",
+   "data_viz": 1,
+   "text_density": 2,
+   "high_impact": 4,
+   "words": 35
+  },
+  "24": {
+   "category": "agenda",
+   "data_viz": 1,
+   "text_density": 2,
+   "high_impact": 2,
+   "words": 27
+  },
+  "25": {
+   "category": "agenda",
+   "data_viz": 1,
+   "text_density": 2,
+   "high_impact": 2,
+   "words": 33
+  },
+  "26": {
+   "category": "agenda",
+   "data_viz": 1,
+   "text_density": 2,
+   "high_impact": 2,
+   "words": 37
+  },
+  "27": {
+   "category": "agenda",
+   "data_viz": 1,
+   "text_density": 1,
+   "high_impact": 3,
+   "words": 12
+  },
+  "28": {
+   "category": "agenda",
+   "data_viz": 1,
+   "text_density": 2,
+   "high_impact": 2,
+   "words": 19
+  },
+  "30": {
+   "category": "section_breaker",
+   "data_viz": 1,
+   "text_density": 1,
+   "high_impact": 5,
+   "words": 4
+  },
+  "31": {
+   "category": "section_breaker",
+   "data_viz": 1,
+   "text_density": 1,
+   "high_impact": 4,
+   "words": 4
+  },
+  "32": {
+   "category": "section_breaker",
+   "data_viz": 1,
+   "text_density": 1,
+   "high_impact": 4,
+   "words": 4
+  },
+  "33": {
+   "category": "section_breaker",
+   "data_viz": 1,
+   "text_density": 1,
+   "high_impact": 4,
+   "words": 4
+  },
+  "34": {
+   "category": "section_breaker",
+   "data_viz": 1,
+   "text_density": 1,
+   "high_impact": 5,
+   "words": 4
+  },
+  "35": {
+   "category": "section_breaker",
+   "data_viz": 1,
+   "text_density": 1,
+   "high_impact": 5,
+   "words": 4
+  },
+  "36": {
+   "category": "section_breaker",
+   "data_viz": 1,
+   "text_density": 1,
+   "high_impact": 5,
+   "words": 4
+  },
+  "37": {
+   "category": "section_breaker",
+   "data_viz": 1,
+   "text_density": 1,
+   "high_impact": 5,
+   "words": 4
+  },
+  "38": {
+   "category": "section_breaker",
+   "data_viz": 1,
+   "text_density": 1,
+   "high_impact": 5,
+   "words": 4
+  },
+  "39": {
+   "category": "section_breaker",
+   "data_viz": 1,
+   "text_density": 1,
+   "high_impact": 5,
+   "words": 4
+  },
+  "40": {
+   "category": "section_breaker",
+   "data_viz": 1,
+   "text_density": 1,
+   "high_impact": 5,
+   "words": 4
+  },
+  "41": {
+   "category": "section_breaker",
+   "data_viz": 1,
+   "text_density": 1,
+   "high_impact": 5,
+   "words": 4
+  },
+  "42": {
+   "category": "section_breaker",
+   "data_viz": 1,
+   "text_density": 1,
+   "high_impact": 5,
+   "words": 4
+  },
+  "43": {
+   "category": "section_breaker",
+   "data_viz": 1,
+   "text_density": 1,
+   "high_impact": 5,
+   "words": 4
+  },
+  "44": {
+   "category": "section_breaker",
+   "data_viz": 1,
+   "text_density": 1,
+   "high_impact": 4,
+   "words": 2
+  },
+  "45": {
+   "category": "section_breaker",
+   "data_viz": 1,
+   "text_density": 1,
+   "high_impact": 4,
+   "words": 2
+  },
+  "46": {
+   "category": "section_breaker",
+   "data_viz": 1,
+   "text_density": 1,
+   "high_impact": 4,
+   "words": 2
+  },
+  "47": {
+   "category": "section_breaker",
+   "data_viz": 1,
+   "text_density": 1,
+   "high_impact": 4,
+   "words": 2
+  },
+  "49": {
+   "category": "testimonial",
+   "data_viz": 1,
+   "text_density": 2,
+   "high_impact": 5,
+   "words": 24
+  },
+  "50": {
+   "category": "testimonial",
+   "data_viz": 1,
+   "text_density": 2,
+   "high_impact": 5,
+   "words": 24
+  },
+  "51": {
+   "category": "testimonial",
+   "data_viz": 1,
+   "text_density": 2,
+   "high_impact": 4,
+   "words": 24
+  },
+  "52": {
+   "category": "testimonial",
+   "data_viz": 1,
+   "text_density": 2,
+   "high_impact": 4,
+   "words": 24
+  },
+  "53": {
+   "category": "testimonial",
+   "data_viz": 1,
+   "text_density": 2,
+   "high_impact": 4,
+   "words": 24
+  },
+  "54": {
+   "category": "testimonial",
+   "data_viz": 1,
+   "text_density": 2,
+   "high_impact": 4,
+   "words": 24
+  },
+  "55": {
+   "category": "testimonial",
+   "data_viz": 1,
+   "text_density": 2,
+   "high_impact": 4,
+   "words": 24
+  },
+  "56": {
+   "category": "testimonial",
+   "data_viz": 1,
+   "text_density": 2,
+   "high_impact": 4,
+   "words": 24
+  },
+  "57": {
+   "category": "testimonial",
+   "data_viz": 1,
+   "text_density": 2,
+   "high_impact": 4,
+   "words": 24
+  },
+  "58": {
+   "category": "testimonial",
+   "data_viz": 1,
+   "text_density": 2,
+   "high_impact": 4,
+   "words": 24
+  },
+  "60": {
+   "category": "statement",
+   "data_viz": 1,
+   "text_density": 1,
+   "high_impact": 4,
+   "words": 4
+  },
+  "61": {
+   "category": "statement",
+   "data_viz": 1,
+   "text_density": 1,
+   "high_impact": 5,
+   "words": 4
+  },
+  "62": {
+   "category": "statement",
+   "data_viz": 1,
+   "text_density": 1,
+   "high_impact": 5,
+   "words": 4
+  },
+  "63": {
+   "category": "title_prose",
+   "data_viz": 1,
+   "text_density": 1,
+   "high_impact": 3,
+   "words": 6
+  },
+  "64": {
+   "category": "title_prose",
+   "data_viz": 1,
+   "text_density": 1,
+   "high_impact": 2,
+   "words": 5
+  },
+  "65": {
+   "category": "title_bullets",
+   "data_viz": 1,
+   "text_density": 3,
+   "high_impact": 2,
+   "words": 69
+  },
+  "66": {
+   "category": "title_prose",
+   "data_viz": 1,
+   "text_density": 3,
+   "high_impact": 2,
+   "words": 41
+  },
+  "67": {
+   "category": "content_columns",
+   "data_viz": 1,
+   "text_density": 4,
+   "high_impact": 2,
+   "words": 126
+  },
+  "68": {
+   "category": "title_prose",
+   "data_viz": 1,
+   "text_density": 4,
+   "high_impact": 2,
+   "words": 121
+  },
+  "69": {
+   "category": "content_columns",
+   "data_viz": 1,
+   "text_density": 5,
+   "high_impact": 3,
+   "words": 242
+  },
+  "70": {
+   "category": "content_columns",
+   "data_viz": 1,
+   "text_density": 5,
+   "high_impact": 3,
+   "words": 161
+  },
+  "71": {
+   "category": "content_columns",
+   "data_viz": 1,
+   "text_density": 5,
+   "high_impact": 3,
+   "words": 161
+  },
+  "72": {
+   "category": "content_columns",
+   "data_viz": 1,
+   "text_density": 5,
+   "high_impact": 3,
+   "words": 200
+  },
+  "73": {
+   "category": "title_prose",
+   "data_viz": 1,
+   "text_density": 3,
+   "high_impact": 2,
+   "words": 41
+  },
+  "74": {
+   "category": "title_prose",
+   "data_viz": 1,
+   "text_density": 3,
+   "high_impact": 2,
+   "words": 41
+  },
+  "75": {
+   "category": "title_prose",
+   "data_viz": 1,
+   "text_density": 3,
+   "high_impact": 2,
+   "words": 41
+  },
+  "76": {
+   "category": "title_prose",
+   "data_viz": 1,
+   "text_density": 3,
+   "high_impact": 2,
+   "words": 41
+  },
+  "77": {
+   "category": "title_prose",
+   "data_viz": 1,
+   "text_density": 3,
+   "high_impact": 2,
+   "words": 41
+  },
+  "78": {
+   "category": "content_columns",
+   "data_viz": 1,
+   "text_density": 5,
+   "high_impact": 2,
+   "words": 161
+  },
+  "79": {
+   "category": "content_columns",
+   "data_viz": 1,
+   "text_density": 5,
+   "high_impact": 2,
+   "words": 161
+  },
+  "80": {
+   "category": "stat_trio",
+   "data_viz": 3,
+   "text_density": 3,
+   "high_impact": 4,
+   "words": 56
+  },
+  "81": {
+   "category": "card_grid",
+   "data_viz": 1,
+   "text_density": 4,
+   "high_impact": 3,
+   "words": 125
+  },
+  "82": {
+   "category": "card_grid",
+   "data_viz": 1,
+   "text_density": 4,
+   "high_impact": 3,
+   "words": 115
+  },
+  "83": {
+   "category": "card_grid",
+   "data_viz": 1,
+   "text_density": 4,
+   "high_impact": 3,
+   "words": 105
+  },
+  "84": {
+   "category": "card_grid",
+   "data_viz": 1,
+   "text_density": 4,
+   "high_impact": 3,
+   "words": 105
+  },
+  "85": {
+   "category": "caption_grid",
+   "data_viz": 1,
+   "text_density": 4,
+   "high_impact": 3,
+   "words": 122
+  },
+  "86": {
+   "category": "caption_grid",
+   "data_viz": 1,
+   "text_density": 1,
+   "high_impact": 2,
+   "words": 8
+  },
+  "87": {
+   "category": "caption_grid",
+   "data_viz": 1,
+   "text_density": 3,
+   "high_impact": 2,
+   "words": 61
+  },
+  "88": {
+   "category": "caption_grid",
+   "data_viz": 1,
+   "text_density": 1,
+   "high_impact": 2,
+   "words": 9
+  },
+  "89": {
+   "category": "caption_grid",
+   "data_viz": 1,
+   "text_density": 1,
+   "high_impact": 2,
+   "words": 13
+  },
+  "91": {
+   "category": "data_viz",
+   "data_viz": 4,
+   "text_density": 2,
+   "high_impact": 3,
+   "words": 17
+  },
+  "92": {
+   "category": "data_viz",
+   "data_viz": 4,
+   "text_density": 1,
+   "high_impact": 4,
+   "words": 13
+  },
+  "93": {
+   "category": "data_viz",
+   "data_viz": 5,
+   "text_density": 3,
+   "high_impact": 4,
+   "words": 50
+  },
+  "94": {
+   "category": "data_viz",
+   "data_viz": 5,
+   "text_density": 4,
+   "high_impact": 3,
+   "words": 91
+  },
+  "95": {
+   "category": "data_viz",
+   "data_viz": 5,
+   "text_density": 3,
+   "high_impact": 4,
+   "words": 50
+  },
+  "96": {
+   "category": "data_viz",
+   "data_viz": 5,
+   "text_density": 4,
+   "high_impact": 2,
+   "words": 108
+  },
+  "97": {
+   "category": "data_viz",
+   "data_viz": 5,
+   "text_density": 4,
+   "high_impact": 2,
+   "words": 68
+  },
+  "98": {
+   "category": "data_viz",
+   "data_viz": 5,
+   "text_density": 4,
+   "high_impact": 4,
+   "words": 98
+  },
+  "99": {
+   "category": "data_viz",
+   "data_viz": 5,
+   "text_density": 3,
+   "high_impact": 4,
+   "words": 88
+  },
+  "100": {
+   "category": "data_viz",
+   "data_viz": 5,
+   "text_density": 4,
+   "high_impact": 3,
+   "words": 97
+  },
+  "101": {
+   "category": "data_viz",
+   "data_viz": 5,
+   "text_density": 4,
+   "high_impact": 4,
+   "words": 100
+  },
+  "102": {
+   "category": "data_viz",
+   "data_viz": 5,
+   "text_density": 4,
+   "high_impact": 3,
+   "words": 100
+  },
+  "103": {
+   "category": "data_viz",
+   "data_viz": 5,
+   "text_density": 4,
+   "high_impact": 2,
+   "words": 72
+  },
+  "104": {
+   "category": "data_viz",
+   "data_viz": 3,
+   "text_density": 3,
+   "high_impact": 4,
+   "words": 46
+  },
+  "105": {
+   "category": "data_viz",
+   "data_viz": 5,
+   "text_density": 3,
+   "high_impact": 4,
+   "words": 64
+  },
+  "106": {
+   "category": "data_viz",
+   "data_viz": 3,
+   "text_density": 2,
+   "high_impact": 4,
+   "words": 22
+  },
+  "107": {
+   "category": "data_viz",
+   "data_viz": 4,
+   "text_density": 2,
+   "high_impact": 4,
+   "words": 38
+  },
+  "108": {
+   "category": "data_viz",
+   "data_viz": 4,
+   "text_density": 3,
+   "high_impact": 4,
+   "words": 56
+  },
+  "109": {
+   "category": "data_viz",
+   "data_viz": 5,
+   "text_density": 4,
+   "high_impact": 5,
+   "words": 92
+  },
+  "110": {
+   "category": "data_viz",
+   "data_viz": 5,
+   "text_density": 4,
+   "high_impact": 4,
+   "words": 100
+  },
+  "111": {
+   "category": "data_viz",
+   "data_viz": 5,
+   "text_density": 4,
+   "high_impact": 4,
+   "words": 144
+  },
+  "112": {
+   "category": "data_viz",
+   "data_viz": 5,
+   "text_density": 4,
+   "high_impact": 4,
+   "words": 122
+  },
+  "113": {
+   "category": "data_viz",
+   "data_viz": 2,
+   "text_density": 4,
+   "high_impact": 2,
+   "words": 93
+  },
+  "114": {
+   "category": "data_viz",
+   "data_viz": 2,
+   "text_density": 3,
+   "high_impact": 2,
+   "words": 67
+  },
+  "115": {
+   "category": "data_viz",
+   "data_viz": 1,
+   "text_density": 4,
+   "high_impact": 2,
+   "words": 130
+  },
+  "116": {
+   "category": "statement",
+   "data_viz": 1,
+   "text_density": 3,
+   "high_impact": 4,
+   "words": 49
+  },
+  "118": {
+   "category": "case_study",
+   "data_viz": 4,
+   "text_density": 3,
+   "high_impact": 4,
+   "words": 74
+  },
+  "119": {
+   "category": "case_study",
+   "data_viz": 4,
+   "text_density": 5,
+   "high_impact": 3,
+   "words": 199
+  },
+  "120": {
+   "category": "case_study",
+   "data_viz": 3,
+   "text_density": 4,
+   "high_impact": 3,
+   "words": 105
+  },
+  "122": {
+   "category": "demo",
+   "data_viz": 1,
+   "text_density": 1,
+   "high_impact": 3,
+   "words": 6
+  },
+  "123": {
+   "category": "demo",
+   "data_viz": 2,
+   "text_density": 3,
+   "high_impact": 4,
+   "words": 49
+  },
+  "124": {
+   "category": "demo",
+   "data_viz": 3,
+   "text_density": 3,
+   "high_impact": 4,
+   "words": 67
+  },
+  "126": {
+   "category": "end",
+   "data_viz": 1,
+   "text_density": 1,
+   "high_impact": 5,
+   "words": 2
+  },
+  "127": {
+   "category": "end",
+   "data_viz": 1,
+   "text_density": 1,
+   "high_impact": 4,
+   "words": 2
+  },
+  "128": {
+   "category": "end",
+   "data_viz": 1,
+   "text_density": 1,
+   "high_impact": 4,
+   "words": 0
+  },
+  "129": {
+   "category": "end",
+   "data_viz": 1,
+   "text_density": 1,
+   "high_impact": 4,
+   "words": 0
+  },
+  "131": {
+   "category": "extended_bullets",
+   "data_viz": 1,
+   "text_density": 4,
+   "high_impact": 2,
+   "words": 91
+  },
+  "132": {
+   "category": "extended_bullets",
+   "data_viz": 1,
+   "text_density": 4,
+   "high_impact": 2,
+   "words": 108
+  },
+  "133": {
+   "category": "extended_bullets",
+   "data_viz": 2,
+   "text_density": 5,
+   "high_impact": 2,
+   "words": 197
+  },
+  "134": {
+   "category": "extended_bullets",
+   "data_viz": 1,
+   "text_density": 4,
+   "high_impact": 2,
+   "words": 101
+  },
+  "135": {
+   "category": "extended_bullets",
+   "data_viz": 2,
+   "text_density": 4,
+   "high_impact": 2,
+   "words": 114
+  },
+  "136": {
+   "category": "extended_bullets",
+   "data_viz": 1,
+   "text_density": 4,
+   "high_impact": 2,
+   "words": 102
+  },
+  "137": {
+   "category": "extended_bullets",
+   "data_viz": 1,
+   "text_density": 4,
+   "high_impact": 2,
+   "words": 124
+  },
+  "138": {
+   "category": "extended_bullets",
+   "data_viz": 1,
+   "text_density": 4,
+   "high_impact": 2,
+   "words": 120
+  },
+  "139": {
+   "category": "extended_bullets",
+   "data_viz": 2,
+   "text_density": 4,
+   "high_impact": 2,
+   "words": 102
+  },
+  "140": {
+   "category": "extended_bullets",
+   "data_viz": 2,
+   "text_density": 4,
+   "high_impact": 2,
+   "words": 92
+  },
+  "141": {
+   "category": "extended_bullets",
+   "data_viz": 2,
+   "text_density": 4,
+   "high_impact": 2,
+   "words": 97
+  },
+  "142": {
+   "category": "extended_bullets",
+   "data_viz": 1,
+   "text_density": 4,
+   "high_impact": 2,
+   "words": 101
+  },
+  "143": {
+   "category": "extended_bullets",
+   "data_viz": 1,
+   "text_density": 3,
+   "high_impact": 2,
+   "words": 80
+  },
+  "144": {
+   "category": "extended_bullets",
+   "data_viz": 1,
+   "text_density": 4,
+   "high_impact": 2,
+   "words": 115
+  },
+  "145": {
+   "category": "extended_bullets",
+   "data_viz": 1,
+   "text_density": 4,
+   "high_impact": 2,
+   "words": 98
+  },
+  "146": {
+   "category": "extended_bullets",
+   "data_viz": 2,
+   "text_density": 4,
+   "high_impact": 2,
+   "words": 99
+  },
+  "147": {
+   "category": "extended_bullets",
+   "data_viz": 2,
+   "text_density": 3,
+   "high_impact": 2,
+   "words": 89
+  },
+  "148": {
+   "category": "extended_bullets",
+   "data_viz": 2,
+   "text_density": 4,
+   "high_impact": 2,
+   "words": 94
+  },
+  "149": {
+   "category": "point_cards",
+   "data_viz": 1,
+   "text_density": 4,
+   "high_impact": 3,
+   "words": 118
+  },
+  "150": {
+   "category": "point_cards",
+   "data_viz": 1,
+   "text_density": 4,
+   "high_impact": 3,
+   "words": 118
+  },
+  "151": {
+   "category": "detail_areas",
+   "data_viz": 1,
+   "text_density": 5,
+   "high_impact": 2,
+   "words": 202
+  },
+  "152": {
+   "category": "detail_areas",
+   "data_viz": 1,
+   "text_density": 3,
+   "high_impact": 3,
+   "words": 62
+  },
+  "153": {
+   "category": "detail_areas",
+   "data_viz": 1,
+   "text_density": 5,
+   "high_impact": 3,
+   "words": 177
+  },
+  "154": {
+   "category": "detail_areas",
+   "data_viz": 1,
+   "text_density": 5,
+   "high_impact": 3,
+   "words": 240
+  },
+  "155": {
+   "category": "detail_areas",
+   "data_viz": 1,
+   "text_density": 5,
+   "high_impact": 3,
+   "words": 188
+  },
+  "156": {
+   "category": "comparison_table",
+   "data_viz": 4,
+   "text_density": 4,
+   "high_impact": 4,
+   "words": 72
+  },
+  "157": {
+   "category": "comparison_table",
+   "data_viz": 4,
+   "text_density": 4,
+   "high_impact": 3,
+   "words": 117
+  },
+  "158": {
+   "category": "detail_areas",
+   "data_viz": 1,
+   "text_density": 4,
+   "high_impact": 2,
+   "words": 145
+  },
+  "159": {
+   "category": "timeline",
+   "data_viz": 4,
+   "text_density": 5,
+   "high_impact": 3,
+   "words": 168
+  },
+  "160": {
+   "category": "timeline",
+   "data_viz": 4,
+   "text_density": 4,
+   "high_impact": 3,
+   "words": 138
+  },
+  "161": {
+   "category": "timeline",
+   "data_viz": 4,
+   "text_density": 5,
+   "high_impact": 3,
+   "words": 266
+  },
+  "162": {
+   "category": "timeline",
+   "data_viz": 5,
+   "text_density": 3,
+   "high_impact": 3,
+   "words": 70
+  },
+  "163": {
+   "category": "timeline",
+   "data_viz": 3,
+   "text_density": 5,
+   "high_impact": 2,
+   "words": 252
+  },
+  "164": {
+   "category": "timeline",
+   "data_viz": 3,
+   "text_density": 5,
+   "high_impact": 2,
+   "words": 270
+  }
+ }
+}

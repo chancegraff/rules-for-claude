@@ -19,6 +19,10 @@
 //   5. No body flag at all (`gh pr edit 12 --add-reviewer x`,
 //      `gh pr create --web`): allowed.
 //
+// `gh api` is read too: `-f body=@<file>` posts the literal string "@<file>",
+// so it is denied and `-F body=@<file>` named instead
+// (~/.work/rules/pr-body-editing.md).
+//
 // Body checks (checkBody): sections split on `## ` headings. Demo and Jira
 // Issue are skipped; Summary, Testing, and any other section are checked. With
 // no `## Summary` heading the whole body is one checked section. Fenced code
@@ -630,6 +634,18 @@ function analyzeSegment(tokens, cwd) {
   if (ghIndex === -1) return null;
   if (!isCommandPosition(tokens, ghIndex)) return null;
   const prIndex = skipGlobalFlags(tokens, ghIndex + 1);
+  if (tokens[prIndex] === 'api') {
+    const bad = tokens.slice(prIndex + 1).some((tok, i, args) => {
+      if (tok === '-f' || tok === '--raw-field') return /^body=@/.test(String(args[i + 1] ?? ''));
+      if (tok.startsWith('-f')) return /^body=@/.test(tok.slice(2));
+      if (tok.startsWith('--raw-field=')) return /^body=@/.test(tok.slice('--raw-field='.length));
+      return false;
+    });
+    if (bad) {
+      return '-f body=@<file> posts the literal string "@<file>". Use -F body=@<file>, which expands the filename (~/.work/rules/pr-body-editing.md).';
+    }
+    return null;
+  }
   if (tokens[prIndex] !== 'pr') return null;
   const subIndex = skipGlobalFlags(tokens, prIndex + 1);
   const sub = tokens[subIndex];

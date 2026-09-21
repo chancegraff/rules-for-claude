@@ -1,7 +1,9 @@
 # Git Safety
 
-Destructive git commands (stash/checkout/restore/reset/clean/revert/merge/mv) are deny-listed; do not attempt them. `git stash` is destructive and unwanted, never. `git reset` is denied in ALL forms (even `--soft`). `git rebase` prompts for approval. If history surgery is needed, state the exact commands and let the user run them.
+`git rebase` asks for permission before it runs, and `settings.json` denies an amend and a force-push. A rebase Chance approves, I run. An amend, a force-push or any other history surgery is his: I state the exact commands and he runs them.
 
-Plain `git switch <branch>` is allowed; `git -C` is deny-listed in settings, so run plain git from the working directory; `git checkout` is off-limits; `git branch <name>` is fine.
+Fixes and consolidation are new commits on top, never an amend. Never prefix a git command with `GIT_EDITOR=true` or another editor-override env var; run `git rebase --continue`, `git commit` and the rest plainly. Chance's git config handles the editor and reuses messages: after a conflict is resolved, a bare `git rebase --continue` keeps the original commit message with no editor.
 
-Never amend commits; fixes and consolidation are new commits on top (or via `git rebase` where approved). Never prefix git commands with `GIT_EDITOR=true` or other editor-override env vars; run `git rebase --continue`, `git commit`, etc. plainly. The user's git config handles the editor and reuses messages: after conflict resolution, bare `git rebase --continue` reuses the original commit message without an interactive editor. Force-push needs explicit user authorization.
+Plain `git switch <branch>` and `git branch <name>` are allowed. `git -C` is denied, so run plain git from the working directory. The other destructive git commands (stash, checkout, restore, reset, clean, revert, merge, mv) are denied in `settings.json`, and `hooks/deny-rule-redirect.js` answers each one with what to run instead when it fires.
+
+In a stacked chain, a rebase onto main is on the table only while no reviewer other than Codex has left a review anywhere in the chain. Once one has, no branch of the chain is rebased onto main, whatever the base has done. Codex reviews alone do not close this gate. Rebasing after a human review rewrites the commits that reviewer anchored their feedback to.

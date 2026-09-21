@@ -1,3 +1,3 @@
 # Scoped Verification
 
-Verification scope matches change scope: run checks against the affected file(s), never whole-package or whole-repo suites. Bare `test`, `lint`, or `format:check` runs across an entire package after a small change are unwanted regardless of which command. Repo stores record the exceptions (commands that cannot be file-scoped, such as project-level type checks).
+Verification scope matches change scope: run checks against the affected file(s), never whole-package or whole-repo suites. Bare `test`, `lint`, or `format:check` runs across an entire package after a small change are unwanted regardless of which command. A command that cannot be file-scoped (a project-level type check) is the exception; everything else runs file-scoped, and where a project's runner needs a particular shape to take one file, that project's memory names the shape (project-aig: `~/.claude/projects/-Users-cgraff-dev-project-aig/memory/reference_vitest_file_scoped.md`).

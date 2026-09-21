@@ -1,0 +1,323 @@
+{
+  "_meta": {
+    "source_deck": "Template—2026 NEW Attentive Company Deck Template.pptx",
+    "derived_by": "attentive-slide-formatting/scripts/audit_pptx.py",
+    "slide_size_in": [10.0, 5.625],
+    "units": "inches; max_chars are per-line-unit caps from designer placeholder hints where available, else computed from box width / chars_per_inch in fit_text.CPI_TABLE",
+    "note": "Geometry x/y/w/h traces to the cited canonical exemplar slide. Values that could not be derived are explicitly marked rather than guessed."
+  },
+
+  "section_divider": {
+    "exemplar_slide": 2,
+    "purpose": "Open a section. Big title + one supporting line on a colored canvas.",
+    "background": "OFFWHITE | CREAM | YELLOW | INK",
+    "slots": {
+      "title":    {"x": 0.5404, "y": 1.275,  "w": 5.3366, "h": 1.6211, "font": "Inter SemiBold", "size": 30.0, "anchor": "b", "max_chars": 44, "expected_lines": 2},
+      "subtitle": {"x": 0.5404, "y": 3.1461, "w": 5.3366, "h": 1.0256, "font": "Inter", "size": 17.0, "anchor": "t", "max_chars": 130, "expected_lines": 3}
+    }
+  },
+
+  "agenda": {
+    "exemplar_slides": [24, 25, 26, 27, 28],
+    "purpose": "Agenda / table of contents previewing deck structure. Layout chosen by section count via templates.agenda_slide_for(): 3->24, 4->25, 5->26, 6->27, 7-10->28.",
+    "background": "OFFWHITE",
+    "variants": {
+      "24": "3-column TOC: serif heading + 3 columns, each a colored accent bar + serif Section label + Inter content list",
+      "25": "4-column TOC",
+      "26": "5-column TOC",
+      "27": "6-section progress list: yellow 'A' panel left + serif vertical list right (active highlighted)",
+      "28": "7-10 numbered list: 'Agenda' label + serif number + serif section name"
+    },
+    "bar_cycle": ["YELLOW(accent3)", "OLIVE(accent4)", "BLUE(accent2)", "ORANGE(accent1)", "YELLOW_SOFT(accent5)"],
+    "slots": {
+      "heading":  {"x": 0.2202, "y": 0.1736, "w": 4.1266, "h": 1.612, "font": "Libre Baskerville", "size": 40.0, "max_chars": 24, "note": "styles 24-26 'Table of contents'"},
+      "bar":      {"y": 2.267, "h": 0.153, "note": "colored accent divider above each section column (24-26)"},
+      "section_label": {"y": 2.62, "h": 0.3107, "font": "Libre Baskerville", "size": 14.0, "max_chars": 26},
+      "content":  {"y": 3.0387, "font": "Inter", "size": 9.0, "max_chars": 24, "max_count": 5},
+      "progress_list": {"x": 3.7391, "y": 0.1736, "w": 6.0108, "h": 3.4921, "font": "Libre Baskerville", "size": 26.0, "max_count": 6, "max_chars": 36, "note": "style 27"},
+      "numbered_label": {"x": 0.1546, "y": 0.25, "font": "Inter", "size": 12.0},
+      "numbers":  {"x": 0.2203, "y": 0.5735, "w": 0.6243, "h": 4.5787, "font": "Libre Baskerville", "size": 22.0, "note": "style 28"},
+      "names":    {"x": 0.8902, "y": 0.5735, "w": 4.8524, "h": 4.5787, "font": "Libre Baskerville", "size": 22.0, "max_count": 10, "max_chars": 34}
+    }
+  },
+
+  "content_columns": {
+    "exemplar_slide": 71,
+    "purpose": "Topic + title + 2–4 parallel 'subhead + paragraph' columns.",
+    "background": "OFFWHITE",
+    "slots": {
+      "topic":  {"x": 0.2202, "y": 0.1794, "w": 2.1306, "h": 0.1759, "font": "Inter SemiBold", "size": 9.0, "max_chars": 22},
+      "title":  {"x": 0.2202, "y": 0.3235, "w": 4.6703, "h": 0.7195, "font": "Inter SemiBold", "size": 22.5, "max_chars": 40, "expected_lines": 1},
+      "columns": {
+        "max_count": 4,
+        "xs": [0.2202, 2.6761, 5.132, 7.5879],
+        "y": 2.0861, "w": 2.1896, "h": 1.7523,
+        "head": {"font": "Inter SemiBold", "size": 9.0, "max_chars": 28},
+        "body": {"font": "Inter", "size": 9.0, "max_chars": 240, "expected_lines": 8}
+      }
+    }
+  },
+
+  "content_with_card": {
+    "exemplar_slide": 131,
+    "purpose": "Workhorse content slide: topic + 4-line header + arrow bullets, with a cream card or image panel on the right.",
+    "background": "OFFWHITE",
+    "designer_hints": ["header = four line header, roughly 110 characters", "each bullet = 75-85 characters"],
+    "slots": {
+      "card":    {"x": 5.0795, "y": 0.2416, "w": 4.6703, "h": 4.9213, "fill": "CARD_CREAM", "radius": 0.04},
+      "topic":   {"x": 0.2202, "y": 0.1794, "w": 2.1306, "h": 0.1759, "font": "Inter SemiBold", "size": 9.0, "max_chars": 22},
+      "header":  {"x": 0.2202, "y": 0.3235, "w": 4.6703, "h": 1.4012, "font": "Inter SemiBold", "size": 22.5, "max_chars": 110, "expected_lines": 4},
+      "bullets": {"x": 0.2202, "y": 2.0796, "w": 3.4908, "h": 1.9232, "font": "Inter", "size": 10.0, "marL": 0.5, "max_count": 4, "max_chars": 85, "min_chars": 75, "expected_lines": 2}
+    }
+  },
+
+  "split_image": {
+    "exemplar_slide": 4,
+    "purpose": "Editorial split: left header + body paragraph, large right-side rounded image.",
+    "background": "OFFWHITE",
+    "slots": {
+      "header": {"x": 0.25, "y": 1.6667, "w": 3.8337, "h": 0.6263, "font": "Inter SemiBold", "size": 22.5, "max_chars": 36, "expected_lines": 1},
+      "body":   {"x": 0.25, "y": 2.7555, "w": 3.9409, "h": 1.6,    "font": "Inter", "size": 12.0, "max_chars": 320, "expected_lines": 7},
+      "image":  {"x": 4.4916, "y": 0.25, "w": 5.2585, "h": 5.128, "geom": "roundRect"}
+    }
+  },
+
+  "stat_trio": {
+    "exemplar_slide": 7,
+    "purpose": "Up to three stat/quote callout cards in a row (serif data point + attribution).",
+    "background": "OFFWHITE",
+    "slots": {
+      "topic": {"x": 0.2202, "y": 0.1794, "w": 4.0, "h": 0.1759, "font": "Inter SemiBold", "size": 9.0, "max_chars": 22},
+      "title": {"x": 0.2202, "y": 0.3235, "w": 6.0, "h": 0.7195, "font": "Inter SemiBold", "size": 22.5, "max_chars": 40},
+      "cards": {
+        "max_count": 3,
+        "y": 1.9, "w": 3.05, "h": 2.4, "gap": 0.3, "x0": 0.2202,
+        "fill": "YELLOW",
+        "number": {"font": "Libre Baskerville", "size": 18.0, "max_chars": 14},
+        "caption": {"font": "Inter", "size": 8.0, "max_chars": 70},
+        "name": {"font": "Inter SemiBold", "size": 7.0, "max_chars": 30},
+        "source": {"font": "Inter", "size": 7.0, "max_chars": 30}
+      }
+    }
+  },
+
+  "testimonial": {
+    "exemplar_slides": [49, 54],
+    "purpose": "Canonical testimonial / quote slide (slides 49-58). Full-page serif quote; with-image variants add a circular headshot. Selected by image availability via decider; color one of cream/yellow/green/blue/orange.",
+    "variants": {
+      "49-53": "no image: full-page quote + attribution bottom-left (cream/yellow/green/blue/orange)",
+      "54-58": "with image: circular headshot top-left + attribution below + quote on the right (same five colors)"
+    },
+    "colors": {"cream": "off-white (ink text)", "yellow": "accent3 (ink)", "green": "accent4 (off-white)", "blue": "accent2 (off-white)", "orange": "accent1 (off-white)"},
+    "slots": {
+      "quote_full":  {"x": 0.25, "y": 0.1736, "w": 9.5066, "h": 2.8786, "font": "Libre Baskerville", "size": 37.5, "marL": 0.25, "max_chars": 145, "expected_lines": 5, "note": "49-53; first sentence bold"},
+      "quote_image": {"x": 3.47, "y": 0.2628, "w": 6.2864, "h": 4.583, "font": "Libre Baskerville", "size": 37.5, "marL": 0.25, "max_chars": 145, "expected_lines": 8, "note": "54-58"},
+      "headshot":    {"geom": "ellipse", "x": 0.2534, "y": 0.2628, "w": 1.8333, "h": 1.8333, "note": "54-58"},
+      "name":        {"font": "Inter SemiBold", "size": 13.5, "bold": true, "max_chars": 28},
+      "source":      {"font": "Inter", "size": 13.0, "max_chars": 30},
+      "attr_full":   {"x": 0.5315, "y": 4.3307, "note": "49-53 attribution"},
+      "attr_image":  {"x": 0.25, "y": 2.3174, "note": "54-58 attribution, below headshot"}
+    }
+  },
+
+  "comparison_table": {
+    "exemplar_slide": 96,
+    "purpose": "Dense comparison / metrics table. Header row dark, body rows cream-banded.",
+    "background": "OFFWHITE",
+    "slots": {
+      "topic":   {"x": 0.2202, "y": 0.1794, "w": 4.0, "h": 0.1759, "font": "Inter SemiBold", "size": 9.0, "max_chars": 22},
+      "title":   {"x": 0.2202, "y": 0.3235, "w": 9.0, "h": 0.7195, "font": "Inter SemiBold", "size": 22.5, "max_chars": 60},
+      "table":   {"x": 0.25, "y": 1.25, "w": 9.5, "h": 3.9, "font": "Inter", "size": 7.0, "header_size": 7.5, "max_cols": 10, "max_rows": 12, "cell_max_chars": 14}
+    }
+  },
+
+  "card_grid": {
+    "exemplar_slide": "9-10 (card component kit)",
+    "purpose": "3 or 4 equal cards, each an icon dot + title + short body. Areas of focus, pillars, problems. Composed from the deck's card components (slides 9-10); cream or dark (dark=True) card modes.",
+    "background": "OFFWHITE",
+    "slots": {
+      "topic":  {"x": 0.2202, "y": 0.1794, "w": 4.0, "h": 0.1759, "font": "Inter SemiBold", "size": 9.0, "max_chars": 22},
+      "title":  {"x": 0.2202, "y": 0.3235, "w": 9.0, "h": 0.7195, "font": "Inter SemiBold", "size": 22.5, "max_chars": 60},
+      "cards": {
+        "max_count": 4,
+        "y": 1.7, "h": 3.3, "gap": 0.28, "x0": 0.2202, "row_w": 9.5595,
+        "fill": "CARD_CREAM", "radius": 0.05,
+        "icon": {"d": 0.5},
+        "card_title": {"font": "Inter SemiBold", "size": 12.0, "max_chars": 26},
+        "body": {"font": "Inter", "size": 9.0, "max_chars": 180, "expected_lines": 6}
+      }
+    }
+  },
+
+  "title_slide": {
+    "exemplar_slides": [13, 14, 15, 16, 17, 18, 19],
+    "purpose": "First slide of a deck. Seven canonical variants selected by title/subtitle length via decider.select_title_template(). Title is Libre Baskerville serif.",
+    "variants": {
+      "13": "yellow + photo (A-cutout), title-only",
+      "14": "yellow + tonal-A watermark, title-only",
+      "15": "cream + plain, title-only",
+      "16": "yellow + tonal-A, title + short subtitle",
+      "17": "cream + plain, title + short subtitle",
+      "18": "yellow + tonal-A, title + long subtitle",
+      "19": "cream + plain, title + long subtitle"
+    },
+    "slots": {
+      "title_big":   {"x": 0.25, "y": 1.75, "w": 5.25, "h": 1.8501, "font": "Libre Baskerville", "size": 55.0, "max_chars": 22, "expected_lines": 2, "note": "styles 13-15"},
+      "title_sub":   {"x": 0.25, "y": 1.75, "w": 5.25, "h": 1.25, "font": "Libre Baskerville", "size": 37.5, "max_chars": 33, "expected_lines": 2, "note": "styles 16-19"},
+      "subtitle_short": {"x": 0.25, "y": 3.0652, "w": 4.6801, "h": 0.25, "font": "Inter", "size": 12.0, "max_chars": 30, "expected_lines": 1},
+      "subtitle_long":  {"x": 0.25, "y": 3.0652, "w": 4.6801, "h": 0.5, "font": "Inter", "size": 12.0, "max_chars": 100, "expected_lines": 2},
+      "image": {"x": 5.0, "y": 0.0, "w": 5.0, "h": 5.625, "note": "style 13 photo"}
+    }
+  },
+
+  "section_breaker": {
+    "exemplar_slides": [30, 34, 44],
+    "purpose": "Transition slide between major deck sections. Three layout families x four accent colors. Title is Libre Baskerville serif 30pt, centered. Selected by decider.select_section_breaker() (no count rule — by length/tone/flow; color rotates across sections).",
+    "variants": {
+      "solid": "slides 30-33: full-bleed accent color + centered title",
+      "photo": "slides 34-43: accent color + large centered circular photo + title over it",
+      "panel": "slides 44-47: cream canvas + left colored 'A' panel + right-side title"
+    },
+    "colors": {"yellow": "accent3 (ink text)", "green": "accent4 (off-white)", "blue": "accent2 (off-white)", "orange": "accent1 (off-white)"},
+    "slots": {
+      "title":      {"x": 1.6567, "y": 2.3115, "w": 6.6864, "h": 1.0069, "font": "Libre Baskerville", "size": 30.0, "align": "center", "anchor": "ctr", "max_chars": 50, "expected_lines": 2, "note": "solid/photo families"},
+      "title_panel":{"x": 5.08, "y": 2.3115, "w": 4.67, "h": 1.0069, "font": "Libre Baskerville", "size": 30.0, "anchor": "ctr", "max_chars": 50, "note": "panel family"},
+      "photo":      {"geom": "ellipse", "x": 1.85, "y": -0.3375, "w": 6.2999, "h": 6.2999, "note": "photo family, large centered circle"},
+      "panel_left": {"x": 0.0, "y": 0.0, "w": 4.999, "h": 5.625, "note": "panel family, colored 'A' panel"}
+    }
+  },
+
+  "statement": {
+    "exemplar_slides": [60, 61, 62],
+    "purpose": "Content section: a single high-impact statement / transition thought. 38pt Libre Baskerville, optional italic emphasis word, optional full-bleed photo background (61-62).",
+    "slots": {
+      "topic":     {"x": 0.2202, "y": 1.815, "w": 9.5597, "h": 0.2119, "font": "Inter SemiBold", "size": 9.0, "max_chars": 22},
+      "statement": {"x": 0.2202, "y": 2.2445, "w": 9.5597, "h": 1.1, "font": "Libre Baskerville", "size": 38.0, "max_chars": 70, "expected_lines": 2},
+      "image":     {"x": 0.0, "y": 0.0, "w": 10.0, "h": 5.625, "note": "full-bleed photo (61-62)"}
+    }
+  },
+
+  "title_prose": {
+    "exemplar_slides": [64, 73],
+    "purpose": "Content section: narrative explanation — topic + title + a prose intro top-right, with a large supporting image/visual area below.",
+    "slots": {
+      "topic":  {"x": 0.2202, "y": 0.1794, "w": 2.1306, "h": 0.1759, "font": "Inter SemiBold", "size": 7.5, "max_chars": 22},
+      "title":  {"x": 0.2202, "y": 0.3235, "w": 3.6, "h": 0.7195, "font": "Libre Baskerville", "size": 22.5, "max_chars": 40},
+      "prose":  {"x": 3.983, "y": 0.205, "w": 5.795, "h": 0.964, "font": "Inter", "size": 12.75, "max_chars": 260, "expected_lines": 3},
+      "image":  {"x": 0.25, "y": 1.398, "w": 9.5, "h": 3.751, "geom": "roundRect"}
+    }
+  },
+
+  "caption_grid": {
+    "exemplar_slides": [85, 86, 87, 88, 89],
+    "purpose": "Content section: visual/caption-led — 3 or 4 images across, each with a short caption below. Screenshots, examples, logos.",
+    "slots": {
+      "topic":   {"x": 0.2201, "y": 0.1794, "w": 2.1306, "h": 0.1759, "font": "Inter SemiBold", "size": 7.5, "max_chars": 22},
+      "title":   {"x": 0.2202, "y": 0.3235, "w": 6.0, "h": 0.7195, "font": "Libre Baskerville", "size": 22.5, "max_chars": 50},
+      "images":  {"y": 0.25, "h": 3.977, "w": 3.066, "xs_3": [0.2201, 3.467, 6.68], "max_count": 4, "geom": "roundRect"},
+      "caption": {"y": 4.3704, "h": 0.85, "font": "Inter", "size": 7.5, "max_chars": 240, "label_font": "Inter SemiBold"}
+    }
+  },
+
+  "end_slide": {
+    "exemplar_slides": [126, 127, 128, 129],
+    "purpose": "Closing slide. EVERY deck must end with exactly one (generate_deck/decider auto-appends if absent; never multiple unless requested). Four variants = background x optional 'Thank you!'. Selection may be random; seedable for determinism.",
+    "variants": {
+      "126": "yellow + 'Thank you!' + tonal A + wordmark",
+      "127": "cream + 'Thank you!' + wordmark",
+      "128": "yellow + tonal A + wordmark (no closing text)",
+      "129": "cream + wordmark (no closing text)"
+    },
+    "slots": {
+      "closing_text": {"x": 0.25, "y": 0.1736, "w": 6.3789, "h": 1.2264, "font": "Libre Baskerville", "size": 28.0, "max_chars": 40},
+      "wordmark": {"x": 0.25, "y": 3.35, "w": 9.5, "h": 1.7, "font": "Inter SemiBold", "size": 66.0, "note": "big attentive wordmark across the bottom; replace with brand asset for fidelity"}
+    }
+  },
+
+  "demo_slide": {
+    "exemplar_slides": [122, 123, 124],
+    "purpose": "Product demo: show a workflow, platform screen, or step-by-step example. Three templates by demo format, selected via decider / style='auto'. Place screenshots into the existing frames; if none, the template's placeholder treatment is used.",
+    "variants": {
+      "speaker": "slide 122 (dark): intro card — circular headshot + Name (Inter SemiBold 26pt, yellow) + Company/Title (14pt) + Logo (Libre Baskerville 18pt).",
+      "moment": "slide 123 (dark): annotated product moment — 'Product demo' pill + headshot + headline (24pt yellow) + subhead (18pt) + body (10pt) + screenshots.",
+      "workflow": "slide 124 (light): before/after — pill + title + 2-4 screenshot frames with arrow connectors + side annotations + optional gap label ('A few days later…')."
+    },
+    "slots": {
+      "headshot_speaker": {"geom": "ellipse", "x": 4.0814, "y": 0.9051, "w": 1.8497, "h": 1.8497},
+      "name":   {"x": 2.8848, "y": 2.9483, "w": 4.2303, "h": 0.5709, "font": "Inter SemiBold", "size": 26.0, "color": "YELLOW", "anchor": "b"},
+      "company_title": {"x": 2.0002, "y": 3.7546, "w": 5.9997, "h": 0.4377, "font": "Inter", "size": 14.0},
+      "logo_text": {"x": 2.3738, "y": 4.3899, "w": 5.1125, "h": 0.372, "font": "Libre Baskerville", "size": 18.0},
+      "pill": {"x": 0.3328, "y": 0.2633, "w": 1.4593, "h": 0.3091, "fill": "CREAM", "font": "Inter Medium", "size": 10.0},
+      "headline": {"x": 2.0002, "y": 2.8208, "w": 5.9997, "h": 0.5709, "font": "Inter SemiBold", "size": 24.0, "color": "YELLOW"},
+      "subhead": {"x": 2.0002, "y": 3.3788, "w": 5.9997, "h": 0.5709, "font": "Inter", "size": 18.0},
+      "body_moment": {"x": 2.3738, "y": 4.033, "w": 5.1125, "h": 1.1654, "font": "Inter", "size": 10.0, "max_chars": 320},
+      "title_workflow": {"x": 2.0002, "y": 0.8029, "w": 5.9997, "h": 0.5709, "font": "Libre Baskerville", "size": 24.0},
+      "annotation": {"font": "Inter", "size": 8.0, "max_chars": 170}
+    }
+  },
+
+  "case_study": {
+    "exemplar_slides": [118, 119, 120],
+    "purpose": "Customer/brand case study: context, challenge, solution, results, proof. Three templates by story density, selected via decider.select_case_study() / style='auto'. Preserves names, quotes, and metrics; reports rather than dropping proof.",
+    "variants": {
+      "stats": "slide 118: title + optional quote/screenshots + 3 stat blocks (Libre Baskerville 38pt + yellow pills). Richest, results-led.",
+      "narrative": "slide 119: eyebrow + title (24pt) + long body (~780 chars) + image card right + quote card bottom-left.",
+      "text": "slide 120: serif title (22.5pt) + 2 paragraphs (story + outcome) + up to 2 yellow stat pills + right image/card."
+    },
+    "slots": {
+      "title_stats":    {"x": 0.25, "y": 0.3333, "w": 8.2995, "h": 1.0417, "font": "Libre Baskerville", "size": 30.0},
+      "stat_pill":      {"y": 3.5036, "w": 2.1299, "h": 1.0417, "xs": [0.2202, 2.4506, 4.6809], "number_font": "Libre Baskerville", "number_size": 38.0, "label_size": 8.0},
+      "title_narr":     {"x": 0.2202, "y": 0.3235, "w": 4.4134, "h": 0.9695, "font": "Libre Baskerville", "size": 24.0},
+      "body_narr":      {"x": 0.7064, "y": 1.4488, "w": 4.2234, "h": 1.8822, "font": "Inter", "size": 8.5, "max_chars": 780},
+      "quote_narr":     {"x": 0.25, "y": 3.9392, "w": 4.8986, "h": 1.2274, "font": "Inter", "size": 8.0, "max_chars": 234},
+      "image_narr":     {"card": [5.2562, 0.25, 4.479, 4.9167], "pic": [5.6996, 0.9036, 1.6809, 3.6095]},
+      "title_text":     {"x": 0.2202, "y": 0.3235, "w": 4.2014, "h": 1.0604, "font": "Libre Baskerville", "size": 22.5, "max_chars": 80},
+      "body_text":      {"x": 0.3222, "y": 1.6564, "w": 3.2917, "h": 1.9895, "font": "Inter", "size": 9.0, "max_chars": 500, "paragraphs": 2},
+      "stat_pill_text": {"x": 0.2202, "y": 4.3872, "w": 4.3645, "h": 0.7818, "number_size": 22.0, "label_max_chars": 20},
+      "image_text":     {"x": 5.0795, "y": 0.2416, "w": 4.6703, "h": 4.9213}
+    }
+  },
+
+  "fallback": {
+    "exemplar_slides": "131-164",
+    "purpose": "SECONDARY / fallback canonical templates. Use only when the primary content slides (60-89) cannot hold the amount or format of content. Duplicate the selected physical slide and validate its exact capacity rather than forcing overflow.",
+    "groups": {
+      "131-148": "extended bullet & proof layouts (2/3/4-line headers x 4-6 bullets, + optional subhead/stats/metric/proof-cards/QX-badges/sequence)",
+      "149-158": "structured alternatives: 3 neg/pos point cards, 3 detail/example columns, 4 areas, 4 role cards, 4 problem cards, binary + long comparison tables, 6 areas",
+      "159-164": "timelines: 5-phase, 4-phase, 2-workstream, swimlane, 9 story blocks, 9 important-thing blocks"
+    },
+    "selection": "by structure first, then character count. Header height by line count: 2-line 0.67, 3-line 1.06, 4-line 1.40. Bullets 75-85 chars, Inter 10pt. Match the placeholder character density; if it still doesn't fit, split across slides or compress — never silently drop bullets/rows/columns/stats/phases/items.",
+    "names": ["slide_131_long_header_four_bullets","slide_132_long_header_five_bullets","slide_133_header_bullets_two_proof","slide_134_header_five_bullets","slide_135_header_five_bullets_metric","slide_136_header_subhead_four_bullets","slide_137_three_detail_blocks","slide_138_four_topics_bold_lead","slide_139_four_topics_two_stats","slide_140_four_bullets_two_stats","slide_141_four_bullets_metric","slide_142_five_bullets_qx_badges","slide_143_four_step_sequence","slide_144_short_header_six_bullets","slide_145_short_header_five_bullets","slide_146_short_header_subhead_four_bullets","slide_147_short_header_four_bullets_two_stats","slide_148_short_header_four_bullets_metric","slide_149_three_negative_points","slide_150_three_positive_points","slide_151_three_detail_columns","slide_152_three_example_columns","slide_153_four_areas_of_focus","slide_154_four_role_cards","slide_155_four_problem_cards","slide_156_binary_comparison_table","slide_157_long_comparison_table","slide_158_six_areas_of_focus","slide_159_five_phase_timeline","slide_160_four_phase_timeline","slide_161_two_workstream_timeline","slide_162_swimlane_timeline","slide_163_nine_story_blocks","slide_164_nine_important_blocks"]
+  },
+
+  "dataviz": {
+    "exemplar_slides": "91-116",
+    "purpose": "Data-visualization section. Charts are shape-based; the canonical deck has no native chart objects. Duplicate the selected physical slide and replace only supported text or images. Geometry changes require explicit approval and independent verification.",
+    "construction": "bars=rounded rects (height ∝ value); lines=straight connectors; area=freeform fill; pie=PIE preset with avLst start/end angles; matrix=grid of tinted number cells; timeline=connector track + icon dots. Brand yellow primary; accents cycle blue/olive/orange for multi-series.",
+    "templates": {
+      "slide_91_timeline": "timeline / milestones (2-7)",
+      "slide_92_three_kpi_summary": "3 headline KPI cards (middle highlighted)",
+      "slide_95_bar_chart": "vertical bars (2-8) + optional explanation",
+      "slide_96_data_table": "table (<=12 cols x <=14 rows); header dark, cream banding",
+      "slide_99_pie_chart": "pie/donut (2-6 slices) + legend",
+      "slide_101_stacked_bar": "stacked bars (2-8 categories) + legend",
+      "slide_103_matrix_comparison": "heatmap matrix (<=8 rows x <=10 cols)",
+      "slide_107_kpi_row": "row of 2-4 big borderless KPIs",
+      "slide_108_quote_with_data": "proof quote + 1-3 data-point cards",
+      "slide_109_trend_chart": "time-series line/area"
+    },
+    "overflow_rules": "Counts are validated and raise SlotError rather than overcrowd. Charts hold limited categories/rows (e.g. bars <=8, matrix <=8x10); beyond that, simplify, split across slides, or choose a different data-viz template. Pass pre-formatted value strings to keep numeric formatting consistent.",
+    "qa": "verify_templates.check_dataviz_qa() confirms each chart renders from shapes (not a native chart), draws the expected minimum shape count (no dropped bars/rows/slices), and preserves the chart area / layout."
+  },
+
+  "cover": {
+    "exemplar_slide": 1,
+    "purpose": "Deck cover. Large title, optional eyebrow + presenter line, dark or yellow canvas.",
+    "background": "INK",
+    "slots": {
+      "eyebrow":  {"x": 0.5404, "y": 0.9, "w": 7.0, "h": 0.3, "font": "Inter SemiBold", "size": 11.0, "color": "YELLOW", "max_chars": 40},
+      "title":    {"x": 0.5404, "y": 1.275, "w": 8.5, "h": 1.9, "font": "Inter SemiBold", "size": 30.0, "color": "OFFWHITE", "anchor": "b", "max_chars": 60, "expected_lines": 2},
+      "subtitle": {"x": 0.5404, "y": 3.3, "w": 8.0, "h": 1.0, "font": "Inter", "size": 14.0, "color": "OFFWHITE", "max_chars": 120}
+    }
+  }
+}
