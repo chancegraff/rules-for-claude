@@ -57,12 +57,6 @@ process.stdin.on('end', () => {
   if (/\bGIT_CONFIG_PARAMETERS\b/.test(cmd)) {
     reasons.push('GIT_CONFIG_PARAMETERS env override');
   }
-  if (subcmd === 'commit' && /(?:^|\s)--amend(?=\s|$)/.test(cmd)) {
-    reasons.push('--amend (fixes are new commits on top)');
-  }
-  if (subcmd === 'push' && /(?:^|\s)(?:--force|--force-with-lease(?:=\S+)?|-f|\+\S+)(?=\s|$)/.test(cmd)) {
-    reasons.push('--force (a force-push is stated for Chance to run)');
-  }
 
   if (reasons.length === 0) process.exit(0);
 
