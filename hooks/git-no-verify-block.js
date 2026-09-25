@@ -2,7 +2,6 @@
 'use strict';
 
 // git-no-verify-block.js — PreToolUse hook (matcher: Bash)
-// Blocks three things on `git commit` and `git push`: a hook bypass, an amend, and a force-push.
 // Blocks all known forms of pre-commit/pre-push hook bypass when the
 // command is `git commit` or `git push`. Mirrors the zsh guard in
 // ~/.zshenv but tightens it to also catch:
