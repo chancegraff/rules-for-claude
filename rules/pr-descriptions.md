@@ -13,20 +13,17 @@ Consult these rules BEFORE drafting or editing any PR body; never draft from wor
 
 ## Length and plain English
 
-- The description does its job in as few words as possible, with no loss of legibility or context.
+- The description does its job in as few words as possible, with no loss of legibility or context. The limits below are ceilings, never targets: every sentence earns its place by carrying behavior or a choice the reader needs, and a sentence that carries neither is cut. Incident: `~/.work/incidents/2026-10/2026-10-01-pr-body-filled-to-ceiling/`.
 - Plain English, no jargon. Name a file, symbol, or flag when the reader has to go there; describe the rest in words.
 - Sentences are no longer than 15-20 words; the hook denies above 20. Paragraphs are no longer than 2-3 sentences; the hook denies above 3. A list item counts as a paragraph.
 - The Summary is no longer than 4-5 paragraphs (Chance, 2026-09-10, ruling on the round-1 plan); the hook denies above 5.
 
 ## Summary content
 
-- The Summary answers one question: what does this PR do. Nothing else. No "why this exists", no design-choice explanations, no stack context naming other PRs by number, no review guidance, no before/after framing. State the mechanical "what changed" only.
-- Check every Summary sentence against each ban BEFORE posting, by applying the bans, not by paraphrasing them:
-  - Before/after framing includes "replacing", "instead of", "previously", "no longer", "now Xes". State the end state: "A imports from B", not "A imports from B, replacing C".
-  - Review guidance includes any sentence whose only job is preempting a reviewer question. If it explains rather than states a change, cut it.
-  - Rationale includes trailing "so ..." outcome clauses and "per the ticket/spec" references.
-  - After writing, reread each sentence asking: does it state a change the diff contains? If it explains, justifies, compares, or guides, delete it.
-- Imperative sentences stating the diff's changes; imperative shape alone is not enough. Name each change once, at the highest altitude that still says what changed. Cut anything the diff already shows: value enumerations (name the count, not the identifier names), consumer or file lists, parentheticals like "(barrel-exported)", and full paths where the symbol name identifies the change.
+- The Summary answers two questions in plain English: what does this PR do for the product or for the modules that consume it, and which choices did the author make without a precedent. Chance, 2026-10-01, on PR #37039: "It should say what the PR is actually DOING, not what CHANGED in the code. It should also include any choices made that are different from the norm or have no existing patterns to follow." A list of code changes is what the diff already shows, so it is never the Summary.
+- Behavior paragraphs say what a user or a consuming module gets, under which flag, and what stays as it is with the flag off. Name a file or symbol only when the reader has to go there.
+- One paragraph starts "Choices without a precedent:" and names each departure from the norm, each with its reason in one short sentence. Before writing one, prove the absence of a precedent in the package with LSP or a read of the sibling modules; a pattern that already exists is never listed. A PR with no such choice has no such paragraph.
+- Still banned, checked sentence by sentence before posting: stack context naming other PRs by number; review guidance (a sentence whose only job is preempting a reviewer question); before/after framing ("replacing", "instead of", "previously", "no longer", "now Xes"), state the end state instead; value enumerations, consumer or file lists, and parentheticals the diff already shows.
 - Make phrasing self-contained: "that has a planned V2 counterpart", not "with a V2 counterpart in PRs 1-5".
 
 ## Template and the Confluence guide
@@ -36,4 +33,6 @@ Consult these rules BEFORE drafting or editing any PR body; never draft from wor
 
 ## Gold standard
 
-Approved Summary shape, re-cut to the sentence limit on 2026-09-10: "Copy every V1 file in `libs/crm/src/pages/SubscriberDetail/` that has a planned V2 counterpart to a `V2` sibling. Renames are mechanical only: filename, exported symbol, GraphQL names defined in the file, and the matching generated import paths. Add each new file to the `import/no-unused-modules.ignoreExports` list in `libs/crm/.eslintrc`."
+Summary shape under the 2026-10-01 ruling, from PR #37039 (USP-835 data layer): "Give the profile detail pages one shared way to read a channel's subscription status. A channel is Subscribed, Not subscribed, Never subscribed or Not captured. Contact subscriptions now count, so profiles that never opted in to marketing get a status." Then the rule the code applies, in one paragraph. Then: "Choices without a precedent: the status rule takes the subscription type as a plain string. Relay's string union does not fit the generated enum without a cast."
+
+The 2026-09-10 standard ("Copy every V1 file in `libs/crm/src/pages/SubscriberDetail/` that has a planned V2 counterpart to a `V2` sibling. ...") listed code changes and is retired as a shape; its sentence and paragraph limits still hold.
