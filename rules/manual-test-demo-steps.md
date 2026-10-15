@@ -6,6 +6,6 @@ Every PR report to Chance carries two numbered step lists (plain prose, never co
 
 - Links are exact: the sneak-preview URL for the PR's head commit (`https://ui-devel.attentivemobile.com/sneak-preview/<sha7>/` for client-ui, `https://ui-docs.attentivemobile.com/storybooks?commit=<sha7>` for storybooks), the app route, the Storybook sidebar path and story name.
 - Name the feature flags the company needs, and the kind of data the profile or record needs (for example "a profile whose email has a contact subscription and no marketing subscription").
-- Say which screenshots the Demo needs and what each must show, with a before (flag off) shot where the PR changes an existing surface.
+- Say which screenshots the Demo needs and what each must show, with a before (flag off) shot where the PR changes an existing surface. Give each screenshot the one-line title it carries in the Demo, naming its state ("email channel, subscribed"), per [pr-descriptions](pr-descriptions.md).
 - When the preview is not live yet, say which PR check must be green first.
 - A PR with no visible change says so in one line and skips the step lists.

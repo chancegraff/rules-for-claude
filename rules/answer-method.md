@@ -10,4 +10,4 @@ For every output, a reply, a design, a plan, a brief, a procedure:
 4. Take the option that scores best on those, never the quickest ([no-easy-options](no-easy-options.md)). A primitive the user has not committed to is proposed with the option, never added on its own ([no-invented-scaffolding](no-invented-scaffolding.md)).
 5. When a new need or rule arrives, ask what else in the system it changes; one need rarely touches one piece. For a change to existing work, [place-dont-append](place-dont-append.md) governs how it is made.
 
-When the user has to supply the connection, that is a miss: it opens an incident and the method is corrected, not only the instance. Companions: [no-easy-options](no-easy-options.md), [context-options-lean](context-options-lean.md), [engage-framing-first](engage-framing-first.md).
+When the user has to supply the connection, that is a miss: the method is corrected, not only the instance. Companions: [no-easy-options](no-easy-options.md), [context-options-lean](context-options-lean.md), [engage-framing-first](engage-framing-first.md).

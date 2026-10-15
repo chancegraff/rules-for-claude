@@ -13,5 +13,3 @@ No one thing may be boundless; every individual thing must be finite. A hard rul
 - A convergence run carries no round count, no token limit and no refused launch. Its end is its exit table: converged, or no edits across the stall window. This rule's "a run's spending limit" is off for a convergence run.
 
 Earlier rulings this rule narrows and does not break: "no round caps, no numeric limits", "no fixed counts", "no round carries a fixed point cap; the quota rule is the only ceiling", "no cap" on the intake's generation rounds and "never capped" asks, and the knowledge-graph rule "no caps or truncation anywhere". Each of those rejected a number picked by feel, and that form stays rejected. Where one of those things still needs a bound, the bound comes from a measurement or a budget.
-
-The breaks of this rule and what was tried: `~/.claude/incidents/by-rule.md`.

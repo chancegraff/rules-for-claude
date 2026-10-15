@@ -5,5 +5,3 @@
 **Splitting needs no separate approval.** Splitting a file already being edited is inside the approved work, so it never waits on a further word. Splitting is routine work, never deferred cleanup, and it overrides "do not refactor beyond scope" ([approval-gates](approval-gates.md)).
 
 **The test-file canary.** Test files are exempt from the length bias, and their length is the signal: a huge test file means the source it tests has not separated its concerns. The response is a split of the SOURCE into modules of one concern each, and the tests follow their modules under [test-file-naming](test-file-naming.md), one test file per source module.
-
-The breaks of this rule and what was tried: `~/.claude/incidents/by-rule.md`.
